@@ -100,44 +100,52 @@
         <item name="boxCornerRadiusBottomEnd">12dp</item>
     </style>
 
+    <!-- ============================================== -->
+    <!-- ESTILO BASE TextAppearance.App (FALTABA ESTE) -->
+    <!-- ============================================== -->
+    <style name="TextAppearance.App" parent="TextAppearance.Material3.BodyMedium">
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:fontFamily">@font/poppins_regular</item>
+    </style>
+
     <!-- Estilos para textos -->
-    <style name="TextAppearance.App.Headline1">
+    <style name="TextAppearance.App.Headline1" parent="TextAppearance.App">
         <item name="android:textSize">28sp</item>
         <item name="android:textColor">@color/text_primary</item>
         <item name="android:fontFamily">@font/poppins_bold</item>
     </style>
 
-    <style name="TextAppearance.App.Headline2">
+    <style name="TextAppearance.App.Headline2" parent="TextAppearance.App">
         <item name="android:textSize">24sp</item>
         <item name="android:textColor">@color/text_primary</item>
         <item name="android:fontFamily">@font/poppins_semibold</item>
     </style>
 
-    <style name="TextAppearance.App.Title">
+    <style name="TextAppearance.App.Title" parent="TextAppearance.App">
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">@color/text_primary</item>
         <item name="android:fontFamily">@font/poppins_semibold</item>
     </style>
 
-    <style name="TextAppearance.App.Subtitle">
+    <style name="TextAppearance.App.Subtitle" parent="TextAppearance.App">
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/text_secondary</item>
         <item name="android:fontFamily">@font/poppins_medium</item>
     </style>
 
-    <style name="TextAppearance.App.Body">
+    <style name="TextAppearance.App.Body" parent="TextAppearance.App">
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/text_primary</item>
         <item name="android:fontFamily">@font/poppins_regular</item>
     </style>
 
-    <style name="TextAppearance.App.Caption">
+    <style name="TextAppearance.App.Caption" parent="TextAppearance.App">
         <item name="android:textSize">12sp</item>
         <item name="android:textColor">@color/text_secondary</item>
         <item name="android:fontFamily">@font/poppins_regular</item>
     </style>
 
-    <style name="TextAppearance.App.Label">
+    <style name="TextAppearance.App.Label" parent="TextAppearance.App">
         <item name="android:textSize">11sp</item>
         <item name="android:textColor">@color/text_tertiary</item>
         <item name="android:fontFamily">@font/poppins_medium</item>
