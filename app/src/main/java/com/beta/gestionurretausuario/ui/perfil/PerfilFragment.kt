@@ -57,6 +57,8 @@ class PerfilFragment : Fragment() {
         db = FirebaseFirestore.getInstance()
         storage = FirebaseStorage.getInstance()
 
+        binding.tabDatos.isSelected = true
+
         setupClickListeners()
         setupTabs()
         loadUserProfile()
