@@ -1,3 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">GestionUrretaUsuario</string>
+    <!-- App -->
+    <string name="app_name">Urreta Taekwondo</string>
+    <string name="app_version">Versión 1.0.0</string>
+
+    <!-- Navegación -->
+    <string name="nav_drawer_open">Abrir menú</string>
+    <string name="nav_drawer_close">Cerrar menú</string>
+
+    <!-- Menú principal -->
+    <string name="menu_inicio">Inicio</string>
+    <string name="menu_clases">Clases</string>
+    <string name="menu_eventos">Eventos</string>
+    <string name="menu_noticias">Noticias</string>
+    <string name="menu_examenes">Exámenes</string>
+    <string name="menu_pagos">Pagos</string>
+    <string name="menu_tienda">Tienda</string>
+    <string name="menu_perfil">Mi Perfil</string>
+    <string name="menu_cerrar_sesion">Cerrar Sesión</string>
+
+    <!-- Auth - Login -->
+    <string name="login_title">Bienvenido</string>
+    <string name="login_subtitle">Inicia sesión para continuar</string>
+    <string name="login_email_hint">Correo electrónico</string>
+    <string name="login_password_hint">Contraseña</string>
+    <string name="login_button">Iniciar Sesión</string>
+    <string name="login_forgot_password">¿Olvidaste tu contraseña?</string>
+    <string name="login_no_account">¿No tienes cuenta?</string>
+    <string name="login_register_link">Regístrate</string>
+    <string name="login_or_divider">o</string>
+    <string name="login_google">Continuar con Google</string>
+
+    <!-- Auth - Registro -->
+    <string name="register_title">Crear Cuenta</string>
+    <string name="register_subtitle">Únete a nuestra comunidad</string>
+    <string name="register_name_hint">Nombre completo</string>
+    <string name="register_email_hint">Correo electrónico</string>
+    <string name="register_password_hint">Contraseña</string>
+    <string name="register_confirm_password_hint">Confirmar contraseña</string>
+    <string name="register_phone_hint">Teléfono (opcional)</string>
+    <string name="register_button">Crear cuenta</string>
+    <string name="register_have_account">¿Ya tienes cuenta?</string>
+    <string name="register_login_link">Iniciar sesión</string>
+    <string name="register_terms">Al registrarte, aceptas nuestros</string>
+    <string name="register_terms_link">Términos y Condiciones</string>
+
+    <!-- Auth - Recuperar contraseña -->
+    <string name="forgot_password_title">Recuperar Contraseña</string>
+    <string name="forgot_password_subtitle">Te enviaremos un enlace para restablecer tu contraseña</string>
+    <string name="forgot_password_button">Enviar enlace</string>
+    <string name="forgot_password_back">Volver al inicio de sesión</string>
+
+    <!-- Errores -->
+    <string name="error_email_required">El correo es obligatorio</string>
+    <string name="error_email_invalid">Correo electrónico inválido</string>
+    <string name="error_password_required">La contraseña es obligatoria</string>
+    <string name="error_password_short">La contraseña debe tener al menos 6 caracteres</string>
+    <string name="error_password_mismatch">Las contraseñas no coinciden</string>
+    <string name="error_name_required">El nombre es obligatorio</string>
+    <string name="error_auth_failed">Error de autenticación</string>
+    <string name="error_network">Error de conexión</string>
+    <string name="error_unknown">Ha ocurrido un error</string>
+    <string name="error_user_not_found">Usuario no encontrado</string>
+    <string name="error_wrong_password">Contraseña incorrecta</string>
+    <string name="error_email_in_use">Este correo ya está registrado</string>
+
+    <!-- Éxito -->
+    <string name="success_password_reset">Se ha enviado el enlace de recuperación</string>
+    <string name="success_register">Cuenta creada exitosamente</string>
+    <string name="success_logout">Sesión cerrada</string>
+
+    <!-- Perfil -->
+    <string name="profile_title">Mi Perfil</string>
+    <string name="profile_member_active">Miembro Activo</string>
+    <string name="profile_member_inactive">Miembro Inactivo</string>
+    <string name="profile_tab_datos">Datos</string>
+    <string name="profile_tab_grados">Grados</string>
+    <string name="profile_tab_tienda">Tienda</string>
+    <string name="profile_info_personal">Información Personal</string>
+    <string name="profile_edit">Editar</string>
+    <string name="profile_birthdate">Fecha Nac.</string>
+    <string name="profile_license">Licencia</string>
+    <string name="profile_physical">Físico</string>
+    <string name="profile_phone">Teléfono</string>
+    <string name="profile_emergency">Emergencia</string>
+    <string name="profile_trajectory">Trayectoria</string>
+    <string name="profile_orders">Mis Pedidos</string>
+
+    <!-- Inicio -->
+    <string name="home_greeting">Hola de nuevo,</string>
+    <string name="home_next_class">Próxima Clase</string>
+    <string name="home_progress">Progreso</string>
+    <string name="home_weekly_activity">Actividad Semanal</string>
+    <string name="home_streak">Racha:</string>
+    <string name="home_days">días</string>
+
+    <!-- Clases -->
+    <string name="classes_title">Horarios</string>
+    <string name="classes_daily">Diario</string>
+    <string name="classes_weekly">Semanal</string>
+    <string name="classes_today">Hoy</string>
+    <string name="classes_morning">Mañana</string>
+    <string name="classes_afternoon">Tarde</string>
+    <string name="classes_evening">Noche</string>
+    <string name="classes_available">Cupos disponibles</string>
+    <string name="classes_few_spots">Pocos cupos</string>
+    <string name="classes_full">Completo</string>
+    <string name="classes_reserve">Reservar</string>
+    <string name="classes_waitlist">Lista de Espera</string>
+    <string name="classes_checkin">Check-in</string>
+    <string name="classes_no_more">No hay más clases programadas para este día.</string>
+
+    <!-- Eventos -->
+    <string name="events_title">Eventos</string>
+    <string name="events_all">Todos</string>
+    <string name="events_tournaments">Torneos</string>
+    <string name="events_seminars">Seminarios</string>
+    <string name="events_exams">Exámenes</string>
+    <string name="events_register">Registrarse</string>
+    <string name="events_registered">Registrado</string>
+
+    <!-- Noticias -->
+    <string name="news_title">Noticias</string>
+    <string name="news_read_more">Leer más</string>
+    <string name="news_hours_ago">Hace %d horas</string>
+    <string name="news_days_ago">Hace %d días</string>
+    <string name="news_share">Compartir</string>
+
+    <!-- Exámenes -->
+    <string name="exams_title">Exámenes</string>
+    <string name="exams_next_rank">Próximo Rango</string>
+    <string name="exams_requirements">Requisitos de Grado</string>
+    <string name="exams_attendance_required">Asistencia requerida</string>
+    <string name="exams_history">Historial</string>
+    <string name="exams_request">Solicitar Examen</string>
+    <string name="exams_details">Detalles</string>
+    <string name="exams_locked">Requiere completar asistencia para desbloquear</string>
+
+    <!-- Pagos -->
+    <string name="payments_title">Pagos</string>
+    <string name="payments_fee_status">Estado de Cuota</string>
+    <string name="payments_monthly">Cuota Mensual</string>
+    <string name="payments_amount">Monto a Pagar</string>
+    <string name="payments_pending">Pendiente</string>
+    <string name="payments_completed">Completado</string>
+    <string name="payments_pay_now">Pagar Ahora</string>
+    <string name="payments_method">Método de Pago</string>
+    <string name="payments_manage">Gestionar</string>
+    <string name="payments_history">Historial Reciente</string>
+    <string name="payments_view_all">Ver Todo</string>
+    <string name="payments_receipt">Recibo</string>
+
+    <!-- Tienda -->
+    <string name="store_title">Tienda</string>
+    <string name="store_search">Buscar equipo…</string>
+    <string name="store_all">Todo</string>
+    <string name="store_doboks">Doboks</string>
+    <string name="store_belts">Cinturones</string>
+    <string name="store_protection">Protección</string>
+    <string name="store_add_cart">Añadir</string>
+    <string name="store_cart">Carrito</string>
+    <string name="store_new">Nuevo</string>
+    <string name="store_discount">-%d%%</string>
+
+    <!-- Cinturones -->
+    <string name="belt_white">Cinturón Blanco</string>
+    <string name="belt_yellow">Cinturón Amarillo</string>
+    <string name="belt_green">Cinturón Verde</string>
+    <string name="belt_blue">Cinturón Azul</string>
+    <string name="belt_red">Cinturón Rojo</string>
+    <string name="belt_black">Cinturón Negro</string>
+
+    <!-- Grados -->
+    <string name="kup_10">10° Kup</string>
+    <string name="kup_9">9° Kup</string>
+    <string name="kup_8">8° Kup</string>
+    <string name="kup_7">7° Kup</string>
+    <string name="kup_6">6° Kup</string>
+    <string name="kup_5">5° Kup</string>
+    <string name="kup_4">4° Kup</string>
+    <string name="kup_3">3° Kup</string>
+    <string name="kup_2">2° Kup</string>
+    <string name="kup_1">1° Kup</string>
+    <string name="dan_1">1° Dan</string>
+    <string name="dan_2">2° Dan</string>
+    <string name="dan_3">3° Dan</string>
+
+    <!-- General -->
+    <string name="loading">Cargando…</string>
+    <string name="cancel">Cancelar</string>
+    <string name="accept">Aceptar</string>
+    <string name="save">Guardar</string>
+    <string name="delete">Eliminar</string>
+    <string name="edit">Editar</string>
+    <string name="close">Cerrar</string>
+    <string name="retry">Reintentar</string>
+    <string name="confirm">Confirmar</string>
+    <string name="yes">Sí</string>
+    <string name="no">No</string>
+
+    <!-- Días de la semana -->
+    <string name="day_monday">L</string>
+    <string name="day_tuesday">M</string>
+    <string name="day_wednesday">X</string>
+    <string name="day_thursday">J</string>
+    <string name="day_friday">V</string>
+    <string name="day_saturday">S</string>
+    <string name="day_sunday">D</string>
+
+    <!-- Alertas y confirmaciones -->
+    <string name="logout_confirm_title">Cerrar Sesión</string>
+    <string name="logout_confirm_message">¿Estás seguro de que deseas cerrar sesión?</string>
+
+    <!-- Formatos -->
+    <string name="currency_format">$%.2f</string>
+
+    <!-- Pagos adicionales -->
+    <string name="pagos_estado_cuota">ESTADO DE CUOTA</string>
+    <string name="pagos_cuota_mensual">Cuota Mensual</string>
+    <string name="pagos_pendiente">● PENDIENTE</string>
+    <string name="pagos_monto">MONTO A PAGAR</string>
+    <string name="pagos_cuota_regular">Cuota Regular</string>
+    <string name="pagos_seguro">Seguro anual (pro-rata)</string>
+    <string name="pagos_pagar_ahora">Pagar Ahora</string>
+    <string name="pagos_sin_pendientes">¡No tienes pagos pendientes!</string>
+    <string name="pagos_metodo">MÉTODO DE PAGO</string>
+    <string name="pagos_gestionar">Gestionar</string>
+    <string name="pagos_historial">HISTORIAL RECIENTE</string>
+    <string name="pagos_sin_historial">No hay pagos registrados</string>
+    <string name="ver_todo">VER TODO</string>
+
+    <!-- Tienda adicionales -->
+    <string name="tienda_buscar">Buscar equipo…</string>
+    <string name="tienda_todo">Todo</string>
+    <string name="tienda_doboks">Doboks</string>
+    <string name="tienda_cinturones">Cinturones</string>
+    <string name="tienda_protecciones">Protección</string>
+    <string name="tienda_sin_productos">No hay productos disponibles</string>
+
+    <!-- Perfil adicionales -->
+    <string name="perfil_cambiar_foto">Cambiar foto</string>
+    <string name="perfil_miembro_activo">MIEMBRO ACTIVO</string>
+    <string name="perfil_miembro_inactivo">MIEMBRO INACTIVO</string>
+    <string name="perfil_proximo_negro">PRÓX: NEGRO</string>
+    <string name="perfil_tab_datos">DATOS</string>
+    <string name="perfil_tab_grados">GRADOS</string>
+    <string name="perfil_tab_tienda">TIENDA</string>
+    <string name="perfil_info_personal">INFORMACIÓN PERSONAL</string>
+    <string name="perfil_fecha_nac">FECHA NAC.</string>
+    <string name="perfil_licencia">LICENCIA</string>
+    <string name="perfil_fisico">FÍSICO</string>
+    <string name="perfil_telefono">TELÉFONO</string>
+    <string name="perfil_emergencia">EMERGENCIA</string>
+    <string name="perfil_trayectoria">TRAYECTORIA</string>
+    <string name="perfil_mis_pedidos">MIS PEDIDOS</string>
+    <string name="perfil_sin_grados">No hay grados registrados</string>
+    <string name="perfil_sin_pedidos">No hay pedidos registrados</string>
+    <string name="editar">EDITAR</string>
+    <string name="logout">CERRAR SESIÓN</string>
+
+    <!-- Exámenes adicionales -->
+    <string name="examenes_proximo_rango">PRÓXIMO RANGO</string>
+    <string name="examenes_asistencia">Asistencia requerida</string>
+    <string name="examenes_requisitos">REQUISITOS DE GRADO</string>
+    <string name="examenes_historial">HISTORIAL</string>
+    <string name="examenes_solicitar">Solicitar Examen</string>
+    <string name="detalles">DETALLES</string>
+
+    <!-- Errores adicionales -->
+    <string name="error_upload_image">Error al subir la imagen</string>
+    <string name="success_profile_updated">Perfil actualizado</string>
+
 </resources>

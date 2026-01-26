@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:paddingVertical="@dimen/spacing_md"
+    android:background="?attr/selectableItemBackground">
+
+    <!-- Imagen del producto -->
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/iv_producto"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:scaleType="centerCrop"
+        android:background="@color/surface_dark"
+        app:shapeAppearanceOverlay="@style/RoundedImageView"
+        tools:src="@drawable/ic_tienda" />
+
+    <!-- Info del pedido -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_marginHorizontal="@dimen/spacing_md">
+
+        <TextView
+            android:id="@+id/tv_nombre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_primary"
+            android:textSize="@dimen/text_body"
+            android:fontFamily="@font/poppins_semibold"
+            tools:text="Dobok Pro" />
+
+        <TextView
+            android:id="@+id/tv_estado"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_secondary"
+            android:textSize="@dimen/text_body_small"
+            android:fontFamily="@font/poppins_regular"
+            tools:text="ENTREGADO • 24 SEP" />
+    </LinearLayout>
+
+    <!-- Precio -->
+    <TextView
+        android:id="@+id/tv_precio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/primary"
+        android:textSize="@dimen/text_body"
+        android:fontFamily="@font/poppins_semibold"
+        tools:text="$1,200" />
+
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="@dimen/spacing_sm"
+        android:src="@drawable/ic_chevron_right"
+        app:tint="@color/text_hint" />
+
+</LinearLayout>

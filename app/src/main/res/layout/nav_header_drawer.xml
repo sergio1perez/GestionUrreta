@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_header_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/background_drawer"
+    android:padding="@dimen/spacing_lg"
+    android:paddingTop="@dimen/spacing_xl">
+
+    <!-- Botón de cerrar -->
+    <ImageButton
+        android:id="@+id/btn_close_drawer"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/close"
+        android:src="@drawable/ic_close"
+        android:tint="@color/text_secondary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Avatar del usuario -->
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/iv_user_avatar"
+        android:layout_width="@dimen/drawer_avatar_size"
+        android:layout_height="@dimen/drawer_avatar_size"
+        android:layout_marginTop="@dimen/spacing_md"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_person"
+        android:background="@color/background_card"
+        app:shapeAppearanceOverlay="@style/CircleImageView"
+        app:strokeColor="@color/primary"
+        app:strokeWidth="2dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_close_drawer" />
+
+    <!-- Badge del cinturón (opcional) -->
+    <View
+        android:id="@+id/view_belt_indicator"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:background="@drawable/bg_belt_indicator"
+        app:layout_constraintBottom_toBottomOf="@id/iv_user_avatar"
+        app:layout_constraintEnd_toEndOf="@id/iv_user_avatar" />
+
+    <!-- Nombre del usuario -->
+    <TextView
+        android:id="@+id/tv_user_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_md"
+        android:textColor="@color/text_primary"
+        android:textSize="@dimen/text_headline2"
+        android:fontFamily="@font/poppins_bold"
+        android:maxLines="1"
+        android:ellipsize="end"
+        tools:text="Juan Pérez"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_user_avatar" />
+
+    <!-- Información del cinturón -->
+    <LinearLayout
+        android:id="@+id/layout_belt_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_xs"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_user_name">
+
+        <!-- Indicador de color del cinturón -->
+        <View
+            android:id="@+id/view_belt_color"
+            android:layout_width="16dp"
+            android:layout_height="8dp"
+            android:background="@drawable/bg_belt_color_indicator" />
+
+        <TextView
+            android:id="@+id/tv_belt_rank"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_sm"
+            android:textColor="@color/text_secondary"
+            android:textSize="@dimen/text_body"
+            android:fontFamily="@font/poppins_regular"
+            tools:text="Cinturón Rojo • 1er Gup" />
+    </LinearLayout>
+
+    <!-- Espacio inferior -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/spacing_lg"
+        app:layout_constraintTop_toBottomOf="@id/layout_belt_info" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,665 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_dark">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Card header con info del usuario -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/screen_padding_horizontal"
+                app:cardBackgroundColor="@color/card_dark"
+                app:cardCornerRadius="@dimen/card_corner_radius"
+                app:cardElevation="0dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/spacing_lg">
+
+                    <!-- Avatar con borde -->
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/iv_avatar"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:src="@drawable/ic_person"
+                        android:scaleType="centerCrop"
+                        android:background="@color/surface_dark"
+                        app:shapeAppearanceOverlay="@style/CircleImageView"
+                        app:strokeColor="@color/primary"
+                        app:strokeWidth="3dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <!-- Badge del grado sobre el avatar -->
+                    <TextView
+                        android:id="@+id/tv_gup"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_badge_primary"
+                        android:paddingHorizontal="@dimen/spacing_sm"
+                        android:paddingVertical="@dimen/spacing_xs"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_caption"
+                        android:fontFamily="@font/poppins_bold"
+                        tools:text="2° GUP"
+                        app:layout_constraintBottom_toBottomOf="@id/iv_avatar"
+                        app:layout_constraintEnd_toEndOf="@id/iv_avatar"
+                        app:layout_constraintStart_toStartOf="@id/iv_avatar" />
+
+                    <!-- Botón cambiar foto -->
+                    <TextView
+                        android:id="@+id/btn_cambiar_foto"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_sm"
+                        android:text="@string/perfil_cambiar_foto"
+                        android:textColor="@color/primary"
+                        android:textSize="@dimen/text_body_small"
+                        android:fontFamily="@font/poppins_medium"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/iv_avatar" />
+
+                    <!-- Nombre -->
+                    <TextView
+                        android:id="@+id/tv_nombre"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_md"
+                        android:textColor="@color/text_primary"
+                        android:textSize="@dimen/text_headline2"
+                        android:fontFamily="@font/poppins_bold"
+                        tools:text="Juan Pérez"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/btn_cambiar_foto" />
+
+                    <!-- Estado del miembro -->
+                    <LinearLayout
+                        android:id="@+id/layout_estado"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginTop="@dimen/spacing_xs"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_nombre">
+
+                        <View
+                            android:layout_width="8dp"
+                            android:layout_height="8dp"
+                            android:background="@drawable/bg_dot_green" />
+
+                        <TextView
+                            android:id="@+id/tv_estado"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/spacing_xs"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="@dimen/text_body_small"
+                            android:fontFamily="@font/poppins_medium"
+                            android:letterSpacing="0.05"
+                            tools:text="MIEMBRO ACTIVO" />
+                    </LinearLayout>
+
+                    <!-- Info del cinturón -->
+                    <LinearLayout
+                        android:id="@+id/layout_cinturon_info"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="@dimen/spacing_lg"
+                        app:layout_constraintTop_toBottomOf="@id/layout_estado">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical">
+
+                            <View
+                                android:id="@+id/view_cinturon_color"
+                                android:layout_width="4dp"
+                                android:layout_height="20dp"
+                                android:background="@color/belt_red" />
+
+                            <TextView
+                                android:id="@+id/tv_cinturon"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/spacing_sm"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="@dimen/text_body_small"
+                                android:fontFamily="@font/poppins_medium"
+                                tools:text="CINTURÓN ROJO" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/tv_proximo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/perfil_proximo_negro"
+                            android:textColor="@color/primary"
+                            android:textSize="@dimen/text_body_small"
+                            android:fontFamily="@font/poppins_medium" />
+                    </LinearLayout>
+
+                    <!-- Barra de progreso -->
+                    <com.google.android.material.progressindicator.LinearProgressIndicator
+                        android:id="@+id/progress_cinturon"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_sm"
+                        app:indicatorColor="@color/primary"
+                        app:trackColor="@color/divider"
+                        app:trackCornerRadius="4dp"
+                        app:trackThickness="8dp"
+                        android:progress="75"
+                        app:layout_constraintTop_toBottomOf="@id/layout_cinturon_info" />
+
+                    <!-- Texto próximo examen -->
+                    <TextView
+                        android:id="@+id/tv_proximo_examen"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_sm"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="@dimen/text_body_small"
+                        android:fontFamily="@font/poppins_regular"
+                        tools:text="Examen programado: 15 de Noviembre"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/progress_cinturon" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Tabs -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/screen_padding_horizontal"
+                android:layout_marginTop="@dimen/spacing_md"
+                app:cardBackgroundColor="@color/surface_dark"
+                app:cardCornerRadius="@dimen/card_corner_radius"
+                app:cardElevation="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/spacing_xs">
+
+                    <TextView
+                        android:id="@+id/tab_datos"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/perfil_tab_datos"
+                        android:textColor="@color/selector_tab_text"
+                        android:textSize="@dimen/text_body_small"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:gravity="center"
+                        android:padding="@dimen/spacing_md"
+                        android:background="@drawable/selector_tab_background"
+                        android:selected="true" />
+
+                    <TextView
+                        android:id="@+id/tab_grados"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/perfil_tab_grados"
+                        android:textColor="@color/selector_tab_text"
+                        android:textSize="@dimen/text_body_small"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:gravity="center"
+                        android:padding="@dimen/spacing_md"
+                        android:background="@drawable/selector_tab_background" />
+
+                    <TextView
+                        android:id="@+id/tab_tienda"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/perfil_tab_tienda"
+                        android:textColor="@color/selector_tab_text"
+                        android:textSize="@dimen/text_body_small"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:gravity="center"
+                        android:padding="@dimen/spacing_md"
+                        android:background="@drawable/selector_tab_background" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Contenido Tab: Datos -->
+            <LinearLayout
+                android:id="@+id/layout_datos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/screen_padding_horizontal"
+                android:visibility="visible">
+
+                <!-- Card Información Personal -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardBackgroundColor="@color/card_dark"
+                    app:cardCornerRadius="@dimen/card_corner_radius"
+                    app:cardElevation="0dp"
+                    android:layout_marginBottom="@dimen/spacing_md">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="@dimen/spacing_lg">
+
+                        <!-- Header -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:layout_marginBottom="@dimen/spacing_md">
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:src="@drawable/ic_person"
+                                app:tint="@color/primary" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:layout_marginStart="@dimen/spacing_sm"
+                                android:text="@string/perfil_info_personal"
+                                android:textColor="@color/text_primary"
+                                android:textSize="@dimen/text_body"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:letterSpacing="0.05" />
+
+                            <TextView
+                                android:id="@+id/tv_editar_datos"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/editar"
+                                android:textColor="@color/primary"
+                                android:textSize="@dimen/text_body_small"
+                                android:fontFamily="@font/poppins_medium"
+                                android:padding="@dimen/spacing_sm" />
+                        </LinearLayout>
+
+                        <!-- Grid de datos -->
+                        <GridLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:columnCount="2"
+                            android:rowCount="2">
+
+                            <!-- Fecha nacimiento -->
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_columnWeight="1"
+                                android:orientation="vertical"
+                                android:layout_marginEnd="@dimen/spacing_md"
+                                android:layout_marginBottom="@dimen/spacing_md">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/perfil_fecha_nac"
+                                    android:textColor="@color/text_hint"
+                                    android:textSize="@dimen/text_caption"
+                                    android:fontFamily="@font/poppins_regular" />
+
+                                <TextView
+                                    android:id="@+id/tv_fecha_nac"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/text_primary"
+                                    android:textSize="@dimen/text_body"
+                                    android:fontFamily="@font/poppins_medium"
+                                    tools:text="12 May 1995" />
+                            </LinearLayout>
+
+                            <!-- Licencia -->
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_columnWeight="1"
+                                android:orientation="vertical"
+                                android:layout_marginBottom="@dimen/spacing_md">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/perfil_licencia"
+                                    android:textColor="@color/text_hint"
+                                    android:textSize="@dimen/text_caption"
+                                    android:fontFamily="@font/poppins_regular" />
+
+                                <TextView
+                                    android:id="@+id/tv_licencia"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/text_primary"
+                                    android:textSize="@dimen/text_body"
+                                    android:fontFamily="@font/poppins_medium"
+                                    tools:text="TKD-8821" />
+                            </LinearLayout>
+
+                            <!-- Físico -->
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_columnWeight="1"
+                                android:orientation="vertical"
+                                android:layout_marginEnd="@dimen/spacing_md">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/perfil_fisico"
+                                    android:textColor="@color/text_hint"
+                                    android:textSize="@dimen/text_caption"
+                                    android:fontFamily="@font/poppins_regular" />
+
+                                <TextView
+                                    android:id="@+id/tv_fisico"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/text_primary"
+                                    android:textSize="@dimen/text_body"
+                                    android:fontFamily="@font/poppins_medium"
+                                    tools:text="68kg / 175cm" />
+                            </LinearLayout>
+
+                            <!-- Teléfono -->
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_columnWeight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/perfil_telefono"
+                                    android:textColor="@color/text_hint"
+                                    android:textSize="@dimen/text_caption"
+                                    android:fontFamily="@font/poppins_regular" />
+
+                                <TextView
+                                    android:id="@+id/tv_telefono"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/text_primary"
+                                    android:textSize="@dimen/text_body"
+                                    android:fontFamily="@font/poppins_medium"
+                                    tools:text="555-0192" />
+                            </LinearLayout>
+                        </GridLayout>
+
+                        <!-- Contacto emergencia -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:background="@drawable/bg_emergency_card"
+                            android:padding="@dimen/spacing_md"
+                            android:layout_marginTop="@dimen/spacing_sm">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/perfil_emergencia"
+                                    android:textColor="@color/primary"
+                                    android:textSize="@dimen/text_caption"
+                                    android:fontFamily="@font/poppins_semibold"
+                                    android:letterSpacing="0.05" />
+
+                                <TextView
+                                    android:id="@+id/tv_emergencia"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/text_primary"
+                                    android:textSize="@dimen/text_body"
+                                    android:fontFamily="@font/poppins_medium"
+                                    tools:text="Ana Pérez (Madre)" />
+                            </LinearLayout>
+
+                            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                                android:id="@+id/fab_llamar"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_phone"
+                                app:fabCustomSize="44dp"
+                                app:tint="@color/white"
+                                app:backgroundTint="@color/primary"
+                                app:elevation="0dp" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+            </LinearLayout>
+
+            <!-- Contenido Tab: Grados (Trayectoria) -->
+            <LinearLayout
+                android:id="@+id/layout_grados"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/screen_padding_horizontal"
+                android:visibility="gone">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardBackgroundColor="@color/card_dark"
+                    app:cardCornerRadius="@dimen/card_corner_radius"
+                    app:cardElevation="0dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="@dimen/spacing_lg">
+
+                        <!-- Header Trayectoria -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:layout_marginBottom="@dimen/spacing_md">
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:src="@drawable/ic_trophy"
+                                app:tint="@color/primary" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:layout_marginStart="@dimen/spacing_sm"
+                                android:text="@string/perfil_trayectoria"
+                                android:textColor="@color/text_primary"
+                                android:textSize="@dimen/text_body"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:letterSpacing="0.05" />
+
+                            <TextView
+                                android:id="@+id/tv_anos"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/bg_badge_green"
+                                android:paddingHorizontal="@dimen/spacing_sm"
+                                android:paddingVertical="@dimen/spacing_xs"
+                                android:textColor="@color/accent_green"
+                                android:textSize="@dimen/text_caption"
+                                android:fontFamily="@font/poppins_semibold"
+                                tools:text="3 AÑOS" />
+                        </LinearLayout>
+
+                        <!-- RecyclerView grados -->
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rv_grados"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:nestedScrollingEnabled="false"
+                            tools:listitem="@layout/item_grado"
+                            tools:itemCount="3" />
+
+                        <TextView
+                            android:id="@+id/tv_no_grados"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/perfil_sin_grados"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="@dimen/text_body"
+                            android:fontFamily="@font/poppins_regular"
+                            android:textAlignment="center"
+                            android:padding="@dimen/spacing_lg"
+                            android:visibility="gone" />
+
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+            </LinearLayout>
+
+            <!-- Contenido Tab: Tienda (Pedidos) -->
+            <LinearLayout
+                android:id="@+id/layout_pedidos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/screen_padding_horizontal"
+                android:visibility="gone">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardBackgroundColor="@color/card_dark"
+                    app:cardCornerRadius="@dimen/card_corner_radius"
+                    app:cardElevation="0dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="@dimen/spacing_lg">
+
+                        <!-- Header Pedidos -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:layout_marginBottom="@dimen/spacing_md">
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:src="@drawable/ic_cart"
+                                app:tint="@color/primary" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/spacing_sm"
+                                android:text="@string/perfil_mis_pedidos"
+                                android:textColor="@color/text_primary"
+                                android:textSize="@dimen/text_body"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:letterSpacing="0.05" />
+                        </LinearLayout>
+
+                        <!-- RecyclerView pedidos -->
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rv_pedidos"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:nestedScrollingEnabled="false"
+                            tools:listitem="@layout/item_pedido"
+                            tools:itemCount="2" />
+
+                        <TextView
+                            android:id="@+id/tv_no_pedidos"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/perfil_sin_pedidos"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="@dimen/text_body"
+                            android:fontFamily="@font/poppins_regular"
+                            android:textAlignment="center"
+                            android:padding="@dimen/spacing_lg"
+                            android:visibility="gone" />
+
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+            </LinearLayout>
+
+            <!-- Botón cerrar sesión -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_cerrar_sesion"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/button_height"
+                android:layout_margin="@dimen/screen_padding_horizontal"
+                android:text="@string/logout"
+                android:textColor="@color/primary"
+                app:icon="@drawable/ic_logout"
+                app:iconTint="@color/primary"
+                app:strokeColor="@color/primary"
+                app:cornerRadius="@dimen/button_corner_radius" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/spacing_xl" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- Progress Bar -->
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        android:indeterminateTint="@color/primary" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

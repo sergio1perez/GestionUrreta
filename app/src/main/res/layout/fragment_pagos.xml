@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_dark">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/screen_padding_horizontal">
+
+            <!-- Título de sección: Estado de cuota -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pagos_estado_cuota"
+                android:textColor="@color/text_secondary"
+                android:textSize="@dimen/text_caption"
+                android:fontFamily="@font/poppins_medium"
+                android:letterSpacing="0.1"
+                android:layout_marginBottom="@dimen/spacing_md" />
+
+            <!-- Card de pago pendiente -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_pago_pendiente"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/card_dark"
+                app:cardCornerRadius="@dimen/card_corner_radius"
+                app:cardElevation="0dp"
+                app:strokeWidth="1dp"
+                app:strokeColor="@color/divider"
+                android:layout_marginBottom="@dimen/spacing_lg">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/spacing_lg">
+
+                    <!-- Título cuota mensual -->
+                    <TextView
+                        android:id="@+id/tv_cuota_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/pagos_cuota_mensual"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="@dimen/text_body_small"
+                        android:fontFamily="@font/poppins_regular"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <!-- Badge pendiente -->
+                    <TextView
+                        android:id="@+id/tv_estado"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/pagos_pendiente"
+                        android:textColor="@color/warning"
+                        android:textSize="@dimen/text_caption"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:background="@drawable/bg_badge_warning"
+                        android:paddingHorizontal="@dimen/spacing_sm"
+                        android:paddingVertical="@dimen/spacing_xs"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <!-- Mes -->
+                    <TextView
+                        android:id="@+id/tv_mes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_xs"
+                        android:textColor="@color/text_primary"
+                        android:textSize="@dimen/text_headline2"
+                        android:fontFamily="@font/poppins_semibold"
+                        tools:text="Noviembre 2023"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_cuota_label" />
+
+                    <!-- Etiqueta monto -->
+                    <TextView
+                        android:id="@+id/tv_monto_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_lg"
+                        android:text="@string/pagos_monto"
+                        android:textColor="@color/primary"
+                        android:textSize="@dimen/text_caption"
+                        android:fontFamily="@font/poppins_medium"
+                        android:letterSpacing="0.05"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_mes" />
+
+                    <!-- Monto -->
+                    <TextView
+                        android:id="@+id/tv_monto"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/text_primary"
+                        android:textSize="48sp"
+                        android:fontFamily="@font/poppins_bold"
+                        tools:text="$50.00"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_monto_label" />
+
+                    <!-- Desglose -->
+                    <LinearLayout
+                        android:id="@+id/layout_desglose"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginTop="@dimen/spacing_md"
+                        app:layout_constraintTop_toBottomOf="@id/tv_monto">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/pagos_cuota_regular"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="@dimen/text_body_small"
+                                android:fontFamily="@font/poppins_regular" />
+
+                            <TextView
+                                android:id="@+id/tv_cuota_regular"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="@dimen/text_body_small"
+                                android:fontFamily="@font/poppins_regular"
+                                tools:text="$45.00" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="@dimen/spacing_xs">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/pagos_seguro"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="@dimen/text_body_small"
+                                android:fontFamily="@font/poppins_regular" />
+
+                            <TextView
+                                android:id="@+id/tv_seguro"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="@dimen/text_body_small"
+                                android:fontFamily="@font/poppins_regular"
+                                tools:text="$5.00" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Botón Pagar -->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_pagar"
+                        style="@style/AuthButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/button_height"
+                        android:layout_marginTop="@dimen/spacing_lg"
+                        android:text="@string/pagos_pagar_ahora"
+                        app:icon="@drawable/ic_arrow_forward"
+                        app:iconGravity="end"
+                        app:layout_constraintTop_toBottomOf="@id/layout_desglose" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Mensaje sin pagos pendientes -->
+            <TextView
+                android:id="@+id/tv_no_pendientes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/pagos_sin_pendientes"
+                android:textColor="@color/accent_green"
+                android:textSize="@dimen/text_body"
+                android:fontFamily="@font/poppins_medium"
+                android:textAlignment="center"
+                android:padding="@dimen/spacing_lg"
+                android:visibility="gone"
+                android:layout_marginBottom="@dimen/spacing_lg" />
+
+            <!-- Sección Método de pago -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pagos_metodo"
+                android:textColor="@color/text_secondary"
+                android:textSize="@dimen/text_caption"
+                android:fontFamily="@font/poppins_medium"
+                android:letterSpacing="0.1"
+                android:layout_marginTop="@dimen/spacing_md"
+                android:layout_marginBottom="@dimen/spacing_md" />
+
+            <!-- Card método de pago -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_metodo_pago"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/card_dark"
+                app:cardCornerRadius="@dimen/card_corner_radius"
+                app:cardElevation="0dp"
+                android:layout_marginBottom="@dimen/spacing_lg">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/spacing_md">
+
+                    <!-- Icono tarjeta -->
+                    <ImageView
+                        android:layout_width="48dp"
+                        android:layout_height="32dp"
+                        android:src="@drawable/ic_visa"
+                        android:scaleType="fitCenter"
+                        android:background="@drawable/bg_card_icon"
+                        android:padding="@dimen/spacing_sm" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_marginStart="@dimen/spacing_md">
+
+                        <TextView
+                            android:id="@+id/tv_tarjeta"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/text_primary"
+                            android:textSize="@dimen/text_body"
+                            android:fontFamily="@font/poppins_medium"
+                            tools:text="Visa •••• 4242" />
+
+                        <TextView
+                            android:id="@+id/tv_expira"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="@dimen/text_body_small"
+                            android:fontFamily="@font/poppins_regular"
+                            tools:text="Expira 12/26" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tv_gestionar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/pagos_gestionar"
+                        android:textColor="@color/accent_green"
+                        android:textSize="@dimen/text_body_small"
+                        android:fontFamily="@font/poppins_medium"
+                        android:padding="@dimen/spacing_sm" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Sección Historial -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="@dimen/spacing_md"
+                android:layout_marginBottom="@dimen/spacing_md">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/pagos_historial"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="@dimen/text_caption"
+                    android:fontFamily="@font/poppins_medium"
+                    android:letterSpacing="0.1" />
+
+                <TextView
+                    android:id="@+id/tv_ver_todo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ver_todo"
+                    android:textColor="@color/primary"
+                    android:textSize="@dimen/text_body_small"
+                    android:fontFamily="@font/poppins_medium"
+                    android:padding="@dimen/spacing_sm" />
+            </LinearLayout>
+
+            <!-- RecyclerView historial -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_historial"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                tools:listitem="@layout/item_pago_historial"
+                tools:itemCount="3" />
+
+            <!-- Mensaje sin historial -->
+            <TextView
+                android:id="@+id/tv_no_historial"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/pagos_sin_historial"
+                android:textColor="@color/text_secondary"
+                android:textSize="@dimen/text_body"
+                android:fontFamily="@font/poppins_regular"
+                android:textAlignment="center"
+                android:padding="@dimen/spacing_xl"
+                android:visibility="gone" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- Progress Bar -->
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        android:indeterminateTint="@color/primary" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

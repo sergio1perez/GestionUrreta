@@ -1,5 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Colores base -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- Colores de fondo -->
+    <color name="background_dark">#0D0D0D</color>
+    <color name="background_card">#1A1A1A</color>
+    <color name="background_card_elevated">#252525</color>
+    <color name="background_drawer">#0F1A14</color>
+
+    <!-- Colores primarios - Rojo/Rosa -->
+    <color name="primary">#E91E63</color>
+    <color name="primary_dark">#C2185B</color>
+    <color name="primary_light">#F48FB1</color>
+    <color name="primary_variant">#FF4081</color>
+
+    <!-- Colores secundarios - Verde -->
+    <color name="secondary">#4CAF50</color>
+    <color name="secondary_dark">#388E3C</color>
+    <color name="secondary_light">#81C784</color>
+    <color name="accent_green">#00E676</color>
+    <color name="accent_green_bright">#69F0AE</color>
+
+    <!-- Colores de texto -->
+    <color name="text_primary">#FFFFFF</color>
+    <color name="text_secondary">#B3B3B3</color>
+    <color name="text_tertiary">#808080</color>
+    <color name="text_disabled">#4D4D4D</color>
+
+    <!-- Colores de estado -->
+    <color name="success">#4CAF50</color>
+    <color name="warning">#FFC107</color>
+    <color name="error">#F44336</color>
+    <color name="info">#2196F3</color>
+
+    <!-- Colores de cinturones -->
+    <color name="belt_white">#FFFFFF</color>
+    <color name="belt_yellow">#FFEB3B</color>
+    <color name="belt_green">#4CAF50</color>
+    <color name="belt_blue">#2196F3</color>
+    <color name="belt_red">#F44336</color>
+    <color name="belt_black">#212121</color>
+
+    <!-- Colores de UI -->
+    <color name="divider">#2A2A2A</color>
+    <color name="ripple_light">#1AFFFFFF</color>
+    <color name="ripple_dark">#1A000000</color>
+    <color name="overlay_dark">#80000000</color>
+
+    <!-- Colores del menú seleccionado -->
+    <color name="menu_item_selected_bg">#00E676</color>
+    <color name="menu_item_selected_text">#000000</color>
+
+    <!-- Colores para badges/etiquetas -->
+    <color name="badge_new">#E91E63</color>
+    <color name="badge_pending">#FFC107</color>
+    <color name="badge_completed">#4CAF50</color>
+
+    <!-- Transparencias -->
+    <color name="transparent">#00000000</color>
+    <color name="semi_transparent_black">#80000000</color>
+    <color name="semi_transparent_white">#80FFFFFF</color>
+
+    <!-- Alias adicionales para compatibilidad -->
+    <color name="card_dark">@color/background_card</color>
+    <color name="surface_dark">@color/background_card_elevated</color>
+    <color name="text_hint">@color/text_tertiary</color>
 </resources>

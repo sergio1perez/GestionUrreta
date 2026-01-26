@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "181564855339",
+    "project_id": "gestion-urreta",
+    "storage_bucket": "gestion-urreta.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:181564855339:android:6b09a6a0f501d0726ec66e",
+        "android_client_info": {
+          "package_name": "com.beta.gestionurretausuario"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFunriytk3xLca4sRJyhWp4ftF_QXcXnw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
