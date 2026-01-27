@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_evento"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/spacing_lg"
+    app:cardBackgroundColor="@color/card_dark"
+    app:cardCornerRadius="@dimen/card_corner_radius"
+    app:cardElevation="0dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Imagen del evento -->
+        <ImageView
+            android:id="@+id/iv_imagen"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:scaleType="centerCrop"
+            android:background="@color/surface_dark"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Badge de fecha -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_fecha"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/spacing_md"
+            app:cardBackgroundColor="@color/background_dark"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="@dimen/spacing_sm">
+
+                <TextView
+                    android:id="@+id/tv_mes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/primary"
+                    android:textSize="@dimen/text_caption"
+                    android:fontFamily="@font/poppins_medium"
+                    tools:text="OCT" />
+
+                <TextView
+                    android:id="@+id/tv_dia"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_primary"
+                    android:textSize="@dimen/text_headline2"
+                    android:fontFamily="@font/poppins_bold"
+                    tools:text="15" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Contenido -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/spacing_md"
+            app:layout_constraintTop_toBottomOf="@id/iv_imagen">
+
+            <!-- Tipo de evento -->
+            <TextView
+                android:id="@+id/tv_tipo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/primary"
+                android:textSize="@dimen/text_caption"
+                android:fontFamily="@font/poppins_semibold"
+                android:letterSpacing="0.05"
+                tools:text="🏆 TORNEO NACIONAL" />
+
+            <!-- Título -->
+            <TextView
+                android:id="@+id/tv_titulo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_xs"
+                android:textColor="@color/text_primary"
+                android:textSize="@dimen/text_title"
+                android:fontFamily="@font/poppins_bold"
+                tools:text="Campeonato de Verano 2024" />
+
+            <!-- Ubicación -->
+            <TextView
+                android:id="@+id/tv_ubicacion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_xs"
+                android:textColor="@color/text_secondary"
+                android:textSize="@dimen/text_body_small"
+                android:fontFamily="@font/poppins_regular"
+                tools:text="📍 Gimnasio Central, Madrid" />
+
+            <!-- Botón registrarse -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_registrarse"
+                style="@style/AuthButton"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="@dimen/spacing_md"
+                android:text="@string/events_register"
+                app:icon="@drawable/ic_chevron_right"
+                app:iconGravity="end" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

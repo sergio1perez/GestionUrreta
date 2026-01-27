@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_dark">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/screen_padding_horizontal">
+
+            <!-- Card Próximo Rango -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/card_dark"
+                app:cardCornerRadius="@dimen/card_corner_radius"
+                app:cardElevation="0dp"
+                android:layout_marginBottom="@dimen/spacing_lg">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/spacing_lg">
+
+                    <!-- Badge Próximo Rango -->
+                    <TextView
+                        android:id="@+id/tv_badge_proximo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/examenes_proximo_rango"
+                        android:textColor="@color/primary"
+                        android:textSize="@dimen/text_caption"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:background="@drawable/bg_badge_primary_outline"
+                        android:paddingHorizontal="@dimen/spacing_sm"
+                        android:paddingVertical="@dimen/spacing_xs"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <!-- Progreso circular -->
+                    <FrameLayout
+                        android:id="@+id/layout_progreso"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <com.google.android.material.progressindicator.CircularProgressIndicator
+                            android:id="@+id/progress_circular"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_gravity="center"
+                            app:indicatorColor="@color/primary"
+                            app:trackColor="@color/divider"
+                            app:trackThickness="6dp"
+                            android:progress="80" />
+
+                        <TextView
+                            android:id="@+id/tv_progreso_percent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:textColor="@color/text_primary"
+                            android:textSize="@dimen/text_title"
+                            android:fontFamily="@font/poppins_bold"
+                            tools:text="80%" />
+                    </FrameLayout>
+
+                    <!-- Nombre del cinturón -->
+                    <TextView
+                        android:id="@+id/tv_proximo_cinturon"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_sm"
+                        android:layout_marginEnd="@dimen/spacing_md"
+                        android:textColor="@color/text_primary"
+                        android:textSize="@dimen/text_headline1"
+                        android:fontFamily="@font/poppins_bold"
+                        tools:text="Cinturón Verde"
+                        app:layout_constraintEnd_toStartOf="@id/layout_progreso"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_badge_proximo" />
+
+                    <!-- Gup y descripción -->
+                    <TextView
+                        android:id="@+id/tv_proximo_gup"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="@dimen/text_body"
+                        android:fontFamily="@font/poppins_regular"
+                        tools:text="6° Kup • Requisitos del Dojang"
+                        app:layout_constraintEnd_toStartOf="@id/layout_progreso"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_proximo_cinturon" />
+
+                    <!-- Card asistencia -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/card_asistencia"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_lg"
+                        app:cardBackgroundColor="@color/surface_dark"
+                        app:cardCornerRadius="@dimen/card_corner_radius_small"
+                        app:cardElevation="0dp"
+                        app:layout_constraintTop_toBottomOf="@id/tv_proximo_gup">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="@dimen/spacing_md">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:gravity="center_vertical">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="@string/examenes_asistencia"
+                                    android:textColor="@color/text_secondary"
+                                    android:textSize="@dimen/text_body"
+                                    android:fontFamily="@font/poppins_regular" />
+
+                                <TextView
+                                    android:id="@+id/tv_asistencia"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/text_primary"
+                                    android:textSize="@dimen/text_body"
+                                    android:fontFamily="@font/poppins_bold"
+                                    tools:text="24 / 30" />
+                            </LinearLayout>
+
+                            <com.google.android.material.progressindicator.LinearProgressIndicator
+                                android:id="@+id/progress_asistencia"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/spacing_sm"
+                                app:indicatorColor="@color/primary"
+                                app:trackColor="@color/divider"
+                                app:trackCornerRadius="4dp"
+                                app:trackThickness="8dp"
+                                android:max="30"
+                                android:progress="24" />
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Sección Requisitos -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/examenes_requisitos"
+                android:textColor="@color/text_secondary"
+                android:textSize="@dimen/text_caption"
+                android:fontFamily="@font/poppins_medium"
+                android:letterSpacing="0.1"
+                android:layout_marginBottom="@dimen/spacing_md" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_requisitos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                tools:listitem="@layout/item_requisito"
+                tools:itemCount="3" />
+
+            <!-- Sección Historial -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_lg"
+                android:text="@string/examenes_historial"
+                android:textColor="@color/text_secondary"
+                android:textSize="@dimen/text_caption"
+                android:fontFamily="@font/poppins_medium"
+                android:letterSpacing="0.1"
+                android:layout_marginBottom="@dimen/spacing_md" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_historial"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                tools:listitem="@layout/item_examen_historial"
+                tools:itemCount="2" />
+
+            <TextView
+                android:id="@+id/tv_no_historial"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="No hay historial de exámenes"
+                android:textColor="@color/text_secondary"
+                android:textSize="@dimen/text_body"
+                android:fontFamily="@font/poppins_regular"
+                android:textAlignment="center"
+                android:padding="@dimen/spacing_lg"
+                android:visibility="gone" />
+
+            <!-- Espacio para el botón flotante -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="100dp" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- Botón Solicitar Examen -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:orientation="vertical"
+        android:background="@color/background_dark"
+        android:padding="@dimen/screen_padding_horizontal">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_solicitar_examen"
+            style="@style/AuthButton"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/button_height"
+            android:text="@string/examenes_solicitar"
+            app:icon="@drawable/ic_arrow_forward"
+            app:iconGravity="end" />
+
+        <TextView
+            android:id="@+id/tv_requisitos_locked"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_sm"
+            android:text="@string/exams_locked"
+            android:textColor="@color/text_hint"
+            android:textSize="@dimen/text_caption"
+            android:fontFamily="@font/poppins_regular"
+            android:gravity="center"
+            android:drawableStart="@drawable/ic_lock"
+            android:drawablePadding="@dimen/spacing_xs"
+            android:drawableTint="@color/text_hint"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <!-- Badge Gup actual (esquina superior derecha) -->
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|end"
+        android:layout_margin="@dimen/screen_padding_horizontal"
+        app:cardBackgroundColor="@color/surface_dark"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="0dp"
+        app:strokeWidth="1dp"
+        app:strokeColor="@color/divider">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="@dimen/spacing_md"
+            android:paddingVertical="@dimen/spacing_sm">
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@drawable/ic_trophy"
+                app:tint="@color/primary" />
+
+            <TextView
+                android:id="@+id/tv_gup_badge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_xs"
+                android:textColor="@color/text_primary"
+                android:textSize="@dimen/text_body_small"
+                android:fontFamily="@font/poppins_semibold"
+                tools:text="7° Kup" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Progress Bar -->
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        android:indeterminateTint="@color/primary" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

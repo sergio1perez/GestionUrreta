@@ -10,13 +10,22 @@
     android:paddingVertical="@dimen/spacing_md">
 
     <!-- Icono trofeo -->
-    <ImageView
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:src="@drawable/ic_trophy"
-        android:padding="@dimen/spacing_sm"
-        android:background="@drawable/bg_icon_circle_yellow"
-        app:tint="@color/warning" />
+    <FrameLayout
+        android:layout_width="44dp"
+        android:layout_height="44dp">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_icon_circle_yellow" />
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_trophy"
+            app:tint="@color/warning" />
+    </FrameLayout>
 
     <!-- Info -->
     <com.google.android.material.card.MaterialCardView

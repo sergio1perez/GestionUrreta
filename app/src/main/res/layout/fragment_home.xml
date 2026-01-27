@@ -1,0 +1,569 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_dark">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/screen_padding_horizontal">
+
+            <!-- Header con saludo y avatar -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="@dimen/spacing_lg">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_greeting"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/home_greeting"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="@dimen/text_body"
+                        android:fontFamily="@font/poppins_regular" />
+
+                    <TextView
+                        android:id="@+id/tv_user_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/text_primary"
+                        android:textSize="@dimen/text_headline1"
+                        android:fontFamily="@font/poppins_bold"
+                        tools:text="Alejandro" />
+                </LinearLayout>
+
+                <!-- Notificaciones -->
+                <ImageButton
+                    android:id="@+id/btn_notifications"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:layout_marginEnd="@dimen/spacing_sm"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_notification"
+                    app:tint="@color/text_secondary"
+                    android:contentDescription="Notificaciones" />
+
+                <!-- Avatar del usuario -->
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/iv_user_avatar"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_person"
+                    android:background="@color/surface_dark"
+                    app:shapeAppearanceOverlay="@style/CircleImageView"
+                    app:strokeColor="@color/primary"
+                    app:strokeWidth="2dp" />
+            </LinearLayout>
+
+            <!-- Card del progreso del cinturón -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/spacing_md"
+                app:cardBackgroundColor="@color/card_dark"
+                app:cardCornerRadius="@dimen/card_corner_radius"
+                app:cardElevation="0dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/spacing_lg">
+
+                    <!-- Cinturón actual -->
+                    <TextView
+                        android:id="@+id/tv_cinturon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_headline2"
+                        android:fontFamily="@font/poppins_bold"
+                        tools:text="CINTURÓN VERDE"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <!-- GUP badge -->
+                    <TextView
+                        android:id="@+id/tv_gup"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_badge_primary"
+                        android:paddingHorizontal="@dimen/spacing_md"
+                        android:paddingVertical="@dimen/spacing_sm"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_body_small"
+                        android:fontFamily="@font/poppins_bold"
+                        tools:text="7° Kup"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <!-- Dojang -->
+                    <TextView
+                        android:id="@+id/tv_dojang"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_xs"
+                        android:text="DOJANG CENTRAL"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="@dimen/text_body_small"
+                        android:fontFamily="@font/poppins_medium"
+                        android:letterSpacing="0.1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_cinturon" />
+
+                    <!-- Progreso label -->
+                    <TextView
+                        android:id="@+id/tv_next_belt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_lg"
+                        android:text="PROGRESO AL AZUL"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="@dimen/text_caption"
+                        android:fontFamily="@font/poppins_medium"
+                        android:letterSpacing="0.05"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_dojang" />
+
+                    <!-- Porcentaje -->
+                    <TextView
+                        android:id="@+id/tv_progress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/text_primary"
+                        android:textSize="@dimen/text_headline2"
+                        android:fontFamily="@font/poppins_bold"
+                        tools:text="75%"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/tv_next_belt"
+                        app:layout_constraintBottom_toBottomOf="@id/tv_next_belt" />
+
+                    <!-- Progress bar -->
+                    <com.google.android.material.progressindicator.LinearProgressIndicator
+                        android:id="@+id/progress_cinturon"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_sm"
+                        android:progress="75"
+                        app:indicatorColor="@color/primary"
+                        app:trackColor="@color/divider"
+                        app:trackCornerRadius="4dp"
+                        app:trackThickness="8dp"
+                        app:layout_constraintTop_toBottomOf="@id/tv_next_belt" />
+
+                    <!-- Texto de progreso -->
+                    <TextView
+                        android:id="@+id/tv_progress_detail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_sm"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="@dimen/text_body_small"
+                        android:fontFamily="@font/poppins_regular"
+                        tools:text="Faltan 2 Katas y 12 horas de práctica."
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/progress_cinturon" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Card de próxima clase -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_next_class"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/spacing_md"
+                app:cardBackgroundColor="@color/primary"
+                app:cardCornerRadius="@dimen/card_corner_radius"
+                app:cardElevation="0dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/spacing_lg">
+
+                    <!-- Badge próxima clase -->
+                    <TextView
+                        android:id="@+id/tv_next_class_badge"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_badge_dark"
+                        android:paddingHorizontal="@dimen/spacing_sm"
+                        android:paddingVertical="@dimen/spacing_xs"
+                        android:text="● PRÓXIMA CLASE"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_caption"
+                        android:fontFamily="@font/poppins_semibold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <!-- Icono -->
+                    <ImageView
+                        android:id="@+id/iv_class_icon"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:src="@drawable/ic_clases"
+                        android:padding="@dimen/spacing_sm"
+                        android:background="@drawable/bg_icon_circle_white"
+                        app:tint="@color/primary"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <!-- Nombre de la clase -->
+                    <TextView
+                        android:id="@+id/tv_next_class_name"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_md"
+                        android:layout_marginEnd="@dimen/spacing_lg"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_headline2"
+                        android:fontFamily="@font/poppins_bold"
+                        tools:text="Sparring &amp; Combate"
+                        app:layout_constraintEnd_toStartOf="@id/iv_class_icon"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_next_class_badge" />
+
+                    <!-- Divider -->
+                    <View
+                        android:id="@+id/divider_class"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="@dimen/spacing_md"
+                        android:background="@color/semi_transparent_white"
+                        app:layout_constraintTop_toBottomOf="@id/tv_next_class_name" />
+
+                    <!-- Hora y sala -->
+                    <TextView
+                        android:id="@+id/tv_next_class_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_md"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_body"
+                        android:fontFamily="@font/poppins_regular"
+                        tools:text="Hoy • 18:00 - Sala A"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/divider_class" />
+
+                    <!-- Tiempo restante -->
+                    <TextView
+                        android:id="@+id/tv_time_remaining"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:textSize="32sp"
+                        android:fontFamily="@font/poppins_bold"
+                        tools:text="02:15"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_next_class_time" />
+
+                    <TextView
+                        android:id="@+id/tv_remaining_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/spacing_xs"
+                        android:text="restantes"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_body"
+                        android:fontFamily="@font/poppins_regular"
+                        app:layout_constraintBottom_toBottomOf="@id/tv_time_remaining"
+                        app:layout_constraintStart_toEndOf="@id/tv_time_remaining" />
+
+                    <!-- Botón asistir -->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_asistir"
+                        style="@style/Widget.Material3.Button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Asistir"
+                        android:textColor="@color/primary"
+                        app:backgroundTint="@color/white"
+                        app:cornerRadius="20dp"
+                        app:icon="@drawable/ic_arrow_forward"
+                        app:iconGravity="end"
+                        app:iconTint="@color/primary"
+                        app:layout_constraintBottom_toBottomOf="@id/tv_time_remaining"
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Grid de accesos rápidos -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="@dimen/spacing_md">
+
+                <!-- Card Exámenes -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_examenes"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="@dimen/spacing_sm"
+                    app:cardBackgroundColor="@color/card_dark"
+                    app:cardCornerRadius="@dimen/card_corner_radius"
+                    app:cardElevation="0dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="@dimen/spacing_lg">
+
+                        <ImageView
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:src="@drawable/ic_examenes"
+                            android:padding="@dimen/spacing_sm"
+                            android:background="@drawable/bg_icon_circle_surface"
+                            app:tint="@color/primary" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/spacing_md"
+                            android:text="@string/menu_examenes"
+                            android:textColor="@color/text_primary"
+                            android:textSize="@dimen/text_body"
+                            android:fontFamily="@font/poppins_semibold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Inscripción abierta"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="@dimen/text_body_small"
+                            android:fontFamily="@font/poppins_regular" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Card Noticias -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_noticias"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="@dimen/spacing_sm"
+                    app:cardBackgroundColor="@color/card_dark"
+                    app:cardCornerRadius="@dimen/card_corner_radius"
+                    app:cardElevation="0dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/spacing_lg">
+
+                        <!-- Badge de notificación -->
+                        <View
+                            android:id="@+id/badge_noticias"
+                            android:layout_width="8dp"
+                            android:layout_height="8dp"
+                            android:background="@drawable/bg_dot_red"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                            android:id="@+id/iv_noticias"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:src="@drawable/ic_noticias"
+                            android:padding="@dimen/spacing_sm"
+                            android:background="@drawable/bg_icon_circle_surface"
+                            app:tint="@color/primary"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tv_noticias_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/spacing_md"
+                            android:text="@string/menu_noticias"
+                            android:textColor="@color/text_primary"
+                            android:textSize="@dimen/text_body"
+                            android:fontFamily="@font/poppins_semibold"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/iv_noticias" />
+
+                        <TextView
+                            android:id="@+id/tv_noticias_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="2 actualizaciones"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="@dimen/text_body_small"
+                            android:fontFamily="@font/poppins_regular"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/tv_noticias_title" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+
+            <!-- Actividad semanal -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/card_dark"
+                app:cardCornerRadius="@dimen/card_corner_radius"
+                app:cardElevation="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/spacing_lg">
+
+                    <!-- Header -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="@dimen/spacing_md">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/home_weekly_activity"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="@dimen/text_caption"
+                            android:fontFamily="@font/poppins_medium"
+                            android:letterSpacing="0.1" />
+
+                        <TextView
+                            android:id="@+id/tv_streak"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/primary"
+                            android:textSize="@dimen/text_body_small"
+                            android:fontFamily="@font/poppins_semibold"
+                            tools:text="● Racha: 12 días" />
+                    </LinearLayout>
+
+                    <!-- Días de la semana -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center">
+
+                        <TextView
+                            android:id="@+id/day_L"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:gravity="center"
+                            android:text="@string/day_monday"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="@dimen/text_body"
+                            android:fontFamily="@font/poppins_semibold" />
+
+                        <TextView
+                            android:id="@+id/day_M"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_marginStart="@dimen/spacing_md"
+                            android:gravity="center"
+                            android:text="@string/day_tuesday"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="@dimen/text_body"
+                            android:fontFamily="@font/poppins_semibold" />
+
+                        <TextView
+                            android:id="@+id/day_X"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_marginStart="@dimen/spacing_md"
+                            android:gravity="center"
+                            android:text="@string/day_wednesday"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="@dimen/text_body"
+                            android:fontFamily="@font/poppins_semibold" />
+
+                        <TextView
+                            android:id="@+id/day_J"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_marginStart="@dimen/spacing_md"
+                            android:gravity="center"
+                            android:text="@string/day_thursday"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="@dimen/text_body"
+                            android:fontFamily="@font/poppins_semibold" />
+
+                        <TextView
+                            android:id="@+id/day_V"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_marginStart="@dimen/spacing_md"
+                            android:gravity="center"
+                            android:text="@string/day_friday"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="@dimen/text_body"
+                            android:fontFamily="@font/poppins_semibold" />
+
+                        <TextView
+                            android:id="@+id/day_S"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_marginStart="@dimen/spacing_md"
+                            android:gravity="center"
+                            android:text="@string/day_saturday"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="@dimen/text_body"
+                            android:fontFamily="@font/poppins_semibold" />
+
+                        <TextView
+                            android:id="@+id/day_D"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_marginStart="@dimen/spacing_md"
+                            android:gravity="center"
+                            android:text="@string/day_sunday"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="@dimen/text_body"
+                            android:fontFamily="@font/poppins_semibold" />
+                    </LinearLayout>
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/spacing_xl" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- Progress Bar -->
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        android:indeterminateTint="@color/primary" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

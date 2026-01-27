@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_dark">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!-- Tabs Diario/Semanal -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/screen_padding_horizontal"
+            android:layout_marginTop="@dimen/spacing_md"
+            app:cardBackgroundColor="@color/surface_dark"
+            app:cardCornerRadius="@dimen/card_corner_radius"
+            app:cardElevation="0dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="@dimen/spacing_xs">
+
+                <TextView
+                    android:id="@+id/tab_diario"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/classes_daily"
+                    android:textColor="@color/selector_tab_text"
+                    android:textSize="@dimen/text_body"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:gravity="center"
+                    android:padding="@dimen/spacing_md"
+                    android:background="@drawable/selector_tab_background" />
+
+                <TextView
+                    android:id="@+id/tab_semanal"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/classes_weekly"
+                    android:textColor="@color/selector_tab_text"
+                    android:textSize="@dimen/text_body"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:gravity="center"
+                    android:padding="@dimen/spacing_md"
+                    android:background="@drawable/selector_tab_background" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Selector de días -->
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none"
+            android:paddingVertical="@dimen/spacing_md">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingHorizontal="@dimen/screen_padding_horizontal">
+
+                <!-- Día 1 (HOY) -->
+                <LinearLayout
+                    android:id="@+id/layout_day_1"
+                    android:layout_width="56dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:padding="@dimen/spacing_sm"
+                    android:background="@drawable/bg_day_selected">
+
+                    <TextView
+                        android:id="@+id/day_label_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="HOY"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="@dimen/text_caption"
+                        android:fontFamily="@font/poppins_medium" />
+
+                    <TextView
+                        android:id="@+id/day_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/text_primary"
+                        android:textSize="@dimen/text_headline2"
+                        android:fontFamily="@font/poppins_bold"
+                        tools:text="12" />
+                </LinearLayout>
+
+                <!-- Día 2 -->
+                <LinearLayout
+                    android:id="@+id/layout_day_2"
+                    android:layout_width="56dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_sm"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:padding="@dimen/spacing_sm">
+
+                    <TextView
+                        android:id="@+id/day_label_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="MAÑ"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="@dimen/text_caption"
+                        android:fontFamily="@font/poppins_medium" />
+
+                    <TextView
+                        android:id="@+id/day_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/text_primary"
+                        android:textSize="@dimen/text_headline2"
+                        android:fontFamily="@font/poppins_bold"
+                        tools:text="13" />
+                </LinearLayout>
+
+                <!-- Día 3 -->
+                <LinearLayout
+                    android:id="@+id/layout_day_3"
+                    android:layout_width="56dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_sm"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:padding="@dimen/spacing_sm">
+
+                    <TextView
+                        android:id="@+id/day_label_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="JUE"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="@dimen/text_caption"
+                        android:fontFamily="@font/poppins_medium" />
+
+                    <TextView
+                        android:id="@+id/day_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/text_primary"
+                        android:textSize="@dimen/text_headline2"
+                        android:fontFamily="@font/poppins_bold"
+                        tools:text="14" />
+                </LinearLayout>
+
+                <!-- Día 4 -->
+                <LinearLayout
+                    android:id="@+id/layout_day_4"
+                    android:layout_width="56dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_sm"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:padding="@dimen/spacing_sm">
+
+                    <TextView
+                        android:id="@+id/day_label_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="VIE"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="@dimen/text_caption"
+                        android:fontFamily="@font/poppins_medium" />
+
+                    <TextView
+                        android:id="@+id/day_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/text_primary"
+                        android:textSize="@dimen/text_headline2"
+                        android:fontFamily="@font/poppins_bold"
+                        tools:text="15" />
+                </LinearLayout>
+
+                <!-- Día 5 -->
+                <LinearLayout
+                    android:id="@+id/layout_day_5"
+                    android:layout_width="56dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_sm"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:padding="@dimen/spacing_sm">
+
+                    <TextView
+                        android:id="@+id/day_label_5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="SAB"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="@dimen/text_caption"
+                        android:fontFamily="@font/poppins_medium" />
+
+                    <TextView
+                        android:id="@+id/day_5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/text_primary"
+                        android:textSize="@dimen/text_headline2"
+                        android:fontFamily="@font/poppins_bold"
+                        tools:text="16" />
+                </LinearLayout>
+            </LinearLayout>
+        </HorizontalScrollView>
+
+        <!-- RecyclerView de clases -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_clases"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:paddingHorizontal="@dimen/screen_padding_horizontal"
+            android:clipToPadding="false"
+            tools:listitem="@layout/item_clase" />
+
+        <!-- Layout sin clases -->
+        <LinearLayout
+            android:id="@+id/layout_no_clases"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:visibility="gone"
+            android:padding="@dimen/spacing_xl">
+
+            <ImageView
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:src="@drawable/ic_eventos"
+                app:tint="@color/text_tertiary" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_md"
+                android:text="@string/classes_no_more"
+                android:textColor="@color/text_secondary"
+                android:textSize="@dimen/text_body"
+                android:fontFamily="@font/poppins_regular"
+                android:textAlignment="center" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- Progress Bar -->
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        android:indeterminateTint="@color/primary" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

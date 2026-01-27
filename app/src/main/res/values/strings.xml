@@ -19,6 +19,7 @@
     <string name="menu_perfil">Mi Perfil</string>
     <string name="menu_cerrar_sesion">Cerrar Sesión</string>
 
+    <string name="default_web_client_id">181564855339-il43ucitk7q0k7f6grgfqch65bkfne3f.apps.googleusercontent.com</string>
     <!-- Auth - Login -->
     <string name="login_title">Bienvenido</string>
     <string name="login_subtitle">Inicia sesión para continuar</string>
@@ -270,5 +271,7 @@
     <!-- Errores adicionales -->
     <string name="error_upload_image">Error al subir la imagen</string>
     <string name="success_profile_updated">Perfil actualizado</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
