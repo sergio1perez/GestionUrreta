@@ -59,10 +59,10 @@ class NoticiasFragment : Fragment() {
                 binding.swipeRefresh.isRefreshing = false
 
                 if (documents.isEmpty) {
-                    binding.tvNoNoticias.visibility = View.VISIBLE
+                    binding.layoutEmpty.visibility = View.VISIBLE  // CAMBIO
                     binding.rvNoticias.visibility = View.GONE
                 } else {
-                    binding.tvNoNoticias.visibility = View.GONE
+                    binding.layoutEmpty.visibility = View.GONE  // CAMBIO
                     binding.rvNoticias.visibility = View.VISIBLE
 
                     val noticias = documents.map { doc ->
@@ -80,7 +80,7 @@ class NoticiasFragment : Fragment() {
             .addOnFailureListener { e ->
                 binding.progressBar.visibility = View.GONE
                 binding.swipeRefresh.isRefreshing = false
-                binding.tvNoNoticias.visibility = View.VISIBLE
+                binding.layoutEmpty.visibility = View.VISIBLE  // CAMBIO
                 binding.rvNoticias.visibility = View.GONE
             }
     }

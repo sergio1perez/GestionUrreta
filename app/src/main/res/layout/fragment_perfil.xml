@@ -454,6 +454,18 @@
                                     android:textSize="@dimen/text_body"
                                     android:fontFamily="@font/poppins_medium"
                                     tools:text="Ana Pérez (Madre)" />
+
+                                <!-- AÑADIR ESTE TEXTVIEW -->
+                                <TextView
+                                    android:id="@+id/tv_telefono_emergencia"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/text_secondary"
+                                    android:textSize="@dimen/text_body_small"
+                                    android:fontFamily="@font/poppins_regular"
+                                    android:layout_marginTop="2dp"
+                                    tools:text="600 123 456" />
+
                             </LinearLayout>
 
                             <com.google.android.material.floatingactionbutton.FloatingActionButton
