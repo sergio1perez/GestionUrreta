@@ -34,6 +34,9 @@
     <dimen name="icon_size_md">24dp</dimen>
     <dimen name="icon_size_lg">32dp</dimen>
     <dimen name="icon_size_xl">48dp</dimen>
+    <dimen name="icon_size_small">16dp</dimen>
+    <dimen name="icon_size_medium">24dp</dimen>
+    <dimen name="icon_size_large">32dp</dimen>
 
     <!-- Avatar -->
     <dimen name="avatar_size_small">40dp</dimen>
@@ -47,6 +50,8 @@
     <dimen name="drawer_item_height">52dp</dimen>
     <dimen name="drawer_item_padding">16dp</dimen>
     <dimen name="drawer_avatar_size">72dp</dimen>
+    <dimen name="nav_header_height">180dp</dimen>
+    <dimen name="nav_header_vertical_spacing">8dp</dimen>
 
     <!-- Toolbar -->
     <dimen name="toolbar_height">56dp</dimen>
@@ -65,16 +70,28 @@
     <!-- Text sizes -->
     <dimen name="text_headline1">28sp</dimen>
     <dimen name="text_headline2">24sp</dimen>
+    <dimen name="text_headline">32sp</dimen>
     <dimen name="text_title">20sp</dimen>
     <dimen name="text_subtitle">16sp</dimen>
     <dimen name="text_body">14sp</dimen>
     <dimen name="text_body_small">12sp</dimen>
     <dimen name="text_caption">12sp</dimen>
     <dimen name="text_label">11sp</dimen>
+    <dimen name="text_button">16sp</dimen>
 
     <!-- Divider -->
     <dimen name="divider_height">1dp</dimen>
 
     <!-- Menu item selected indicator -->
     <dimen name="menu_selected_indicator_corner">26dp</dimen>
+
+    <!-- Chips -->
+    <dimen name="chip_corner_radius">16dp</dimen>
+
+    <!-- Elevation -->
+    <dimen name="elevation_none">0dp</dimen>
+    <dimen name="elevation_low">2dp</dimen>
+    <dimen name="elevation_medium">4dp</dimen>
+    <dimen name="elevation_high">8dp</dimen>
+
 </resources>

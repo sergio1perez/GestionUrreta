@@ -8,12 +8,14 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.beta.gestionurretausuario.MainActivity
 import com.beta.gestionurretausuario.R
+import com.beta.gestionurretausuario.data.preferences.PreferencesManager
 import com.beta.gestionurretausuario.databinding.ActivityRegisterBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.auth.ktx.userProfileChangeRequest
@@ -26,6 +28,7 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var firestore: FirebaseFirestore
+    private lateinit var preferencesManager: PreferencesManager
 
     companion object {
         private const val RC_SIGN_IN = 9001
@@ -39,6 +42,9 @@ class RegisterActivity : AppCompatActivity() {
         // Inicializar Firebase
         auth = Firebase.auth
         firestore = FirebaseFirestore.getInstance()
+
+        // Inicializar PreferencesManager
+        preferencesManager = PreferencesManager.getInstance(this)
 
         // Configurar Google Sign In
         configureGoogleSignIn()
@@ -123,56 +129,30 @@ class RegisterActivity : AppCompatActivity() {
         // Mostrar loading
         showLoading(true)
 
-        // Crear cuenta con Firebase
+        // Crear usuario con Firebase
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    // Actualizar perfil con el nombre
                     val user = auth.currentUser
-                    val profileUpdates = userProfileChangeRequest {
-                        displayName = name
-                    }
-                    user?.updateProfile(profileUpdates)?.addOnCompleteListener {
-                        // Crear documento del usuario en Firestore
-                        createUserInFirestore(name, email)
+                    user?.let {
+                        // Actualizar perfil con el nombre
+                        val profileUpdates = userProfileChangeRequest {
+                            displayName = name
+                        }
+                        it.updateProfile(profileUpdates)
+                            .addOnCompleteListener { profileTask ->
+                                showLoading(false)
+                                if (profileTask.isSuccessful) {
+                                    saveUserToFirestore(it, name)
+                                    saveSession(it, "email")
+                                    navigateToMain()
+                                }
+                            }
                     }
                 } else {
                     showLoading(false)
                     handleAuthError(task.exception)
                 }
-            }
-    }
-
-    private fun createUserInFirestore(name: String, email: String) {
-        val user = auth.currentUser ?: return
-
-        val userData = hashMapOf(
-            "uid" to user.uid,
-            "nombre" to name,
-            "email" to email,
-            "fotoUrl" to "",
-            "cinturon" to "Blanco",
-            "gup" to "10° Kup",
-            "fechaRegistro" to com.google.firebase.Timestamp.now(),
-            "activo" to true,
-            "telefono" to "",
-            "fechaNacimiento" to null,
-            "contactoEmergencia" to "",
-            "telefonoEmergencia" to ""
-        )
-
-        firestore.collection("usuarios")
-            .document(user.uid)
-            .set(userData)
-            .addOnSuccessListener {
-                showLoading(false)
-                Toast.makeText(this, getString(R.string.success_register), Toast.LENGTH_SHORT).show()
-                navigateToMain()
-            }
-            .addOnFailureListener {
-                showLoading(false)
-                // Aunque falle Firestore, el usuario está creado en Auth
-                navigateToMain()
             }
     }
 
@@ -192,7 +172,7 @@ class RegisterActivity : AppCompatActivity() {
                 firebaseAuthWithGoogle(account.idToken!!)
             } catch (e: ApiException) {
                 showLoading(false)
-                Toast.makeText(this, getString(R.string.error_auth_failed), Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.error_google_sign_in), Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -203,20 +183,49 @@ class RegisterActivity : AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 showLoading(false)
                 if (task.isSuccessful) {
+                    val user = auth.currentUser
                     val isNewUser = task.result?.additionalUserInfo?.isNewUser ?: false
-                    if (isNewUser) {
-                        val user = auth.currentUser
-                        createUserInFirestore(
-                            user?.displayName ?: "",
-                            user?.email ?: ""
-                        )
-                    } else {
-                        navigateToMain()
+
+                    user?.let {
+                        if (isNewUser) {
+                            saveUserToFirestore(it, it.displayName ?: "")
+                        }
+                        saveSession(it, "google")
                     }
+                    navigateToMain()
                 } else {
                     handleAuthError(task.exception)
                 }
             }
+    }
+
+    private fun saveUserToFirestore(user: FirebaseUser, name: String) {
+        val userData = hashMapOf(
+            "uid" to user.uid,
+            "nombre" to name,
+            "email" to (user.email ?: ""),
+            "fotoUrl" to (user.photoUrl?.toString() ?: ""),
+            "cinturon" to "Blanco",
+            "gup" to "10° Kup",
+            "fechaRegistro" to com.google.firebase.Timestamp.now(),
+            "activo" to true,
+            "tipoUsuario" to "alumno"
+        )
+
+        firestore.collection("usuarios")
+            .document(user.uid)
+            .set(userData)
+    }
+
+    private fun saveSession(user: FirebaseUser, provider: String) {
+        preferencesManager.saveUserSession(
+            userId = user.uid,
+            email = user.email ?: "",
+            name = user.displayName,
+            photoUrl = user.photoUrl?.toString(),
+            provider = provider,
+            remember = true // En registro, siempre recordamos la sesión
+        )
     }
 
     private fun handleAuthError(exception: Exception?) {

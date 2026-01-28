@@ -19,7 +19,9 @@
     <string name="menu_perfil">Mi Perfil</string>
     <string name="menu_cerrar_sesion">Cerrar Sesión</string>
 
+    <!-- Google Sign In - TU WEB CLIENT ID REAL -->
     <string name="default_web_client_id">181564855339-il43ucitk7q0k7f6grgfqch65bkfne3f.apps.googleusercontent.com</string>
+
     <!-- Auth - Login -->
     <string name="login_title">Bienvenido</string>
     <string name="login_subtitle">Inicia sesión para continuar</string>
@@ -30,7 +32,9 @@
     <string name="login_no_account">¿No tienes cuenta?</string>
     <string name="login_register_link">Regístrate</string>
     <string name="login_or_divider">o</string>
+    <string name="login_or">o continúa con</string>
     <string name="login_google">Continuar con Google</string>
+    <string name="login_remember_session">Recordar en este dispositivo</string>
 
     <!-- Auth - Registro -->
     <string name="register_title">Crear Cuenta</string>
@@ -65,11 +69,14 @@
     <string name="error_user_not_found">Usuario no encontrado</string>
     <string name="error_wrong_password">Contraseña incorrecta</string>
     <string name="error_email_in_use">Este correo ya está registrado</string>
+    <string name="error_google_sign_in">Error al iniciar sesión con Google</string>
+    <string name="error_upload_image">Error al subir la imagen</string>
 
     <!-- Éxito -->
     <string name="success_password_reset">Se ha enviado el enlace de recuperación</string>
     <string name="success_register">Cuenta creada exitosamente</string>
     <string name="success_logout">Sesión cerrada</string>
+    <string name="success_profile_updated">Perfil actualizado</string>
 
     <!-- Perfil -->
     <string name="profile_title">Mi Perfil</string>
@@ -87,6 +94,31 @@
     <string name="profile_emergency">Emergencia</string>
     <string name="profile_trajectory">Trayectoria</string>
     <string name="profile_orders">Mis Pedidos</string>
+
+    <!-- Perfil adicionales -->
+    <string name="perfil_title">Mi Perfil</string>
+    <string name="perfil_editar">Editar Perfil</string>
+    <string name="perfil_guardar">Guardar Cambios</string>
+    <string name="perfil_datos_personales">Datos Personales</string>
+    <string name="perfil_taekwondo">Taekwondo</string>
+    <string name="perfil_configuracion">Configuración</string>
+    <string name="perfil_cambiar_foto">Cambiar foto</string>
+    <string name="perfil_miembro_activo">MIEMBRO ACTIVO</string>
+    <string name="perfil_miembro_inactivo">MIEMBRO INACTIVO</string>
+    <string name="perfil_proximo_negro">PRÓX: NEGRO</string>
+    <string name="perfil_tab_datos">DATOS</string>
+    <string name="perfil_tab_grados">GRADOS</string>
+    <string name="perfil_tab_tienda">TIENDA</string>
+    <string name="perfil_info_personal">INFORMACIÓN PERSONAL</string>
+    <string name="perfil_fecha_nac">FECHA NAC.</string>
+    <string name="perfil_licencia">LICENCIA</string>
+    <string name="perfil_fisico">FÍSICO</string>
+    <string name="perfil_telefono">TELÉFONO</string>
+    <string name="perfil_emergencia">EMERGENCIA</string>
+    <string name="perfil_trayectoria">TRAYECTORIA</string>
+    <string name="perfil_mis_pedidos">MIS PEDIDOS</string>
+    <string name="perfil_sin_grados">No hay grados registrados</string>
+    <string name="perfil_sin_pedidos">No hay pedidos registrados</string>
 
     <!-- Inicio -->
     <string name="home_greeting">Hola de nuevo,</string>
@@ -111,6 +143,8 @@
     <string name="classes_waitlist">Lista de Espera</string>
     <string name="classes_checkin">Check-in</string>
     <string name="classes_no_more">No hay más clases programadas para este día.</string>
+    <string name="clases_title">Horario de Clases</string>
+    <string name="clases_empty">No hay clases programadas</string>
 
     <!-- Eventos -->
     <string name="events_title">Eventos</string>
@@ -120,6 +154,12 @@
     <string name="events_exams">Exámenes</string>
     <string name="events_register">Registrarse</string>
     <string name="events_registered">Registrado</string>
+    <string name="eventos_title">Eventos</string>
+    <string name="eventos_proximos">Próximos Eventos</string>
+    <string name="eventos_pasados">Eventos Pasados</string>
+    <string name="eventos_empty">No hay eventos disponibles</string>
+    <string name="evento_inscribirse">Inscribirse</string>
+    <string name="evento_inscrito">Inscrito</string>
 
     <!-- Noticias -->
     <string name="news_title">Noticias</string>
@@ -127,6 +167,8 @@
     <string name="news_hours_ago">Hace %d horas</string>
     <string name="news_days_ago">Hace %d días</string>
     <string name="news_share">Compartir</string>
+    <string name="noticias_title">Noticias</string>
+    <string name="noticias_empty">No hay noticias disponibles</string>
 
     <!-- Exámenes -->
     <string name="exams_title">Exámenes</string>
@@ -137,6 +179,17 @@
     <string name="exams_request">Solicitar Examen</string>
     <string name="exams_details">Detalles</string>
     <string name="exams_locked">Requiere completar asistencia para desbloquear</string>
+    <string name="examenes_title">Exámenes</string>
+    <string name="examenes_proximos">Próximos Exámenes</string>
+    <string name="examenes_empty">No hay exámenes programados</string>
+    <string name="examen_inscribirse">Inscribirse</string>
+    <string name="examen_inscrito">Inscrito</string>
+    <string name="examenes_proximo_rango">PRÓXIMO RANGO</string>
+    <string name="examenes_asistencia">Asistencia requerida</string>
+    <string name="examenes_requisitos">REQUISITOS DE GRADO</string>
+    <string name="examenes_historial">HISTORIAL</string>
+    <string name="examenes_solicitar">Solicitar Examen</string>
+    <string name="detalles">DETALLES</string>
 
     <!-- Pagos -->
     <string name="payments_title">Pagos</string>
@@ -151,6 +204,26 @@
     <string name="payments_history">Historial Reciente</string>
     <string name="payments_view_all">Ver Todo</string>
     <string name="payments_receipt">Recibo</string>
+    <string name="pagos_title">Mis Pagos</string>
+    <string name="pagos_pendientes">Pagos Pendientes</string>
+    <string name="pagos_realizados">Pagos Realizados</string>
+    <string name="pagos_empty">No hay pagos</string>
+    <string name="pago_pendiente">Pendiente</string>
+    <string name="pago_pagado">Pagado</string>
+    <string name="pago_vencido">Vencido</string>
+    <string name="pagos_estado_cuota">ESTADO DE CUOTA</string>
+    <string name="pagos_cuota_mensual">Cuota Mensual</string>
+    <string name="pagos_estado_pendiente">● PENDIENTE</string>
+    <string name="pagos_monto">MONTO A PAGAR</string>
+    <string name="pagos_cuota_regular">Cuota Regular</string>
+    <string name="pagos_seguro">Seguro anual (pro-rata)</string>
+    <string name="pagos_pagar_ahora">Pagar Ahora</string>
+    <string name="pagos_sin_pendientes">¡No tienes pagos pendientes!</string>
+    <string name="pagos_metodo">MÉTODO DE PAGO</string>
+    <string name="pagos_gestionar">Gestionar</string>
+    <string name="pagos_historial">HISTORIAL RECIENTE</string>
+    <string name="pagos_sin_historial">No hay pagos registrados</string>
+    <string name="ver_todo">VER TODO</string>
 
     <!-- Tienda -->
     <string name="store_title">Tienda</string>
@@ -163,6 +236,24 @@
     <string name="store_cart">Carrito</string>
     <string name="store_new">Nuevo</string>
     <string name="store_discount">-%d%%</string>
+    <string name="tienda_title">Tienda</string>
+    <string name="tienda_buscar">Buscar productos…</string>
+    <string name="tienda_empty">No hay productos disponibles</string>
+    <string name="tienda_carrito">Carrito</string>
+    <string name="tienda_agregar">Agregar al carrito</string>
+    <string name="tienda_comprar">Comprar</string>
+    <string name="tienda_todo">Todo</string>
+    <string name="tienda_doboks">Doboks</string>
+    <string name="tienda_cinturones">Cinturones</string>
+    <string name="tienda_protecciones">Protección</string>
+    <string name="tienda_sin_productos">No hay productos disponibles</string>
+
+    <!-- Categorías Tienda -->
+    <string name="categoria_todos">Todos</string>
+    <string name="categoria_dobok">Dobok</string>
+    <string name="categoria_protecciones">Protecciones</string>
+    <string name="categoria_accesorios">Accesorios</string>
+    <string name="categoria_equipamiento">Equipamiento</string>
 
     <!-- Cinturones -->
     <string name="belt_white">Cinturón Blanco</string>
@@ -171,6 +262,12 @@
     <string name="belt_blue">Cinturón Azul</string>
     <string name="belt_red">Cinturón Rojo</string>
     <string name="belt_black">Cinturón Negro</string>
+    <string name="cinturon_blanco">Blanco</string>
+    <string name="cinturon_amarillo">Amarillo</string>
+    <string name="cinturon_verde">Verde</string>
+    <string name="cinturon_azul">Azul</string>
+    <string name="cinturon_rojo">Rojo</string>
+    <string name="cinturon_negro">Negro</string>
 
     <!-- Grados -->
     <string name="kup_10">10° Kup</string>
@@ -194,13 +291,19 @@
     <string name="save">Guardar</string>
     <string name="delete">Eliminar</string>
     <string name="edit">Editar</string>
+    <string name="editar">EDITAR</string>
     <string name="close">Cerrar</string>
     <string name="retry">Reintentar</string>
     <string name="confirm">Confirmar</string>
     <string name="yes">Sí</string>
     <string name="no">No</string>
+    <string name="search">Buscar</string>
+    <string name="filter">Filtrar</string>
+    <string name="all">Todos</string>
+    <string name="see_more">Ver más</string>
+    <string name="see_less">Ver menos</string>
 
-    <!-- Días de la semana -->
+    <!-- Días de la semana - Abreviados -->
     <string name="day_monday">L</string>
     <string name="day_tuesday">M</string>
     <string name="day_wednesday">X</string>
@@ -209,69 +312,24 @@
     <string name="day_saturday">S</string>
     <string name="day_sunday">D</string>
 
+    <!-- Días de la semana - Completos -->
+    <string name="dia_lunes">Lunes</string>
+    <string name="dia_martes">Martes</string>
+    <string name="dia_miercoles">Miércoles</string>
+    <string name="dia_jueves">Jueves</string>
+    <string name="dia_viernes">Viernes</string>
+    <string name="dia_sabado">Sábado</string>
+    <string name="dia_domingo">Domingo</string>
+
     <!-- Alertas y confirmaciones -->
     <string name="logout_confirm_title">Cerrar Sesión</string>
     <string name="logout_confirm_message">¿Estás seguro de que deseas cerrar sesión?</string>
+    <string name="logout">CERRAR SESIÓN</string>
 
     <!-- Formatos -->
     <string name="currency_format">$%.2f</string>
 
-    <!-- Pagos adicionales -->
-    <string name="pagos_estado_cuota">ESTADO DE CUOTA</string>
-    <string name="pagos_cuota_mensual">Cuota Mensual</string>
-    <string name="pagos_pendiente">● PENDIENTE</string>
-    <string name="pagos_monto">MONTO A PAGAR</string>
-    <string name="pagos_cuota_regular">Cuota Regular</string>
-    <string name="pagos_seguro">Seguro anual (pro-rata)</string>
-    <string name="pagos_pagar_ahora">Pagar Ahora</string>
-    <string name="pagos_sin_pendientes">¡No tienes pagos pendientes!</string>
-    <string name="pagos_metodo">MÉTODO DE PAGO</string>
-    <string name="pagos_gestionar">Gestionar</string>
-    <string name="pagos_historial">HISTORIAL RECIENTE</string>
-    <string name="pagos_sin_historial">No hay pagos registrados</string>
-    <string name="ver_todo">VER TODO</string>
-
-    <!-- Tienda adicionales -->
-    <string name="tienda_buscar">Buscar equipo…</string>
-    <string name="tienda_todo">Todo</string>
-    <string name="tienda_doboks">Doboks</string>
-    <string name="tienda_cinturones">Cinturones</string>
-    <string name="tienda_protecciones">Protección</string>
-    <string name="tienda_sin_productos">No hay productos disponibles</string>
-
-    <!-- Perfil adicionales -->
-    <string name="perfil_cambiar_foto">Cambiar foto</string>
-    <string name="perfil_miembro_activo">MIEMBRO ACTIVO</string>
-    <string name="perfil_miembro_inactivo">MIEMBRO INACTIVO</string>
-    <string name="perfil_proximo_negro">PRÓX: NEGRO</string>
-    <string name="perfil_tab_datos">DATOS</string>
-    <string name="perfil_tab_grados">GRADOS</string>
-    <string name="perfil_tab_tienda">TIENDA</string>
-    <string name="perfil_info_personal">INFORMACIÓN PERSONAL</string>
-    <string name="perfil_fecha_nac">FECHA NAC.</string>
-    <string name="perfil_licencia">LICENCIA</string>
-    <string name="perfil_fisico">FÍSICO</string>
-    <string name="perfil_telefono">TELÉFONO</string>
-    <string name="perfil_emergencia">EMERGENCIA</string>
-    <string name="perfil_trayectoria">TRAYECTORIA</string>
-    <string name="perfil_mis_pedidos">MIS PEDIDOS</string>
-    <string name="perfil_sin_grados">No hay grados registrados</string>
-    <string name="perfil_sin_pedidos">No hay pedidos registrados</string>
-    <string name="editar">EDITAR</string>
-    <string name="logout">CERRAR SESIÓN</string>
-
-    <!-- Exámenes adicionales -->
-    <string name="examenes_proximo_rango">PRÓXIMO RANGO</string>
-    <string name="examenes_asistencia">Asistencia requerida</string>
-    <string name="examenes_requisitos">REQUISITOS DE GRADO</string>
-    <string name="examenes_historial">HISTORIAL</string>
-    <string name="examenes_solicitar">Solicitar Examen</string>
-    <string name="detalles">DETALLES</string>
-
-    <!-- Errores adicionales -->
-    <string name="error_upload_image">Error al subir la imagen</string>
-    <string name="success_profile_updated">Perfil actualizado</string>
-    <!-- TODO: Remove or change this placeholder text -->
+    <!-- Placeholder -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

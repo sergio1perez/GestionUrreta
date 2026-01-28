@@ -6,32 +6,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_dark"
-    android:padding="@dimen/screen_padding_horizontal">
+    tools:context=".ui.auth.LoginActivity">
 
-    <!-- ScrollView para pantallas pequeñas -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true"
-        android:scrollbars="none">
+        android:fillViewport="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="@dimen/spacing_xxl"
-            android:paddingBottom="@dimen/spacing_lg">
+            android:padding="@dimen/screen_padding_horizontal">
 
-            <!-- Logo o Imagen -->
+            <!-- Logo o imagen de la app -->
             <ImageView
                 android:id="@+id/iv_logo"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
-                android:src="@drawable/ic_launcher_foreground"
-                android:background="@drawable/bg_logo_circle"
+                android:layout_marginTop="48dp"
+                android:src="@drawable/ic_taekwondo_logo"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:contentDescription="@string/app_name" />
+                tools:src="@drawable/ic_taekwondo_logo" />
 
             <!-- Título -->
             <TextView
@@ -41,7 +38,7 @@
                 android:layout_marginTop="@dimen/spacing_lg"
                 android:text="@string/login_title"
                 android:textColor="@color/text_primary"
-                android:textSize="@dimen/text_headline1"
+                android:textSize="@dimen/text_title"
                 android:fontFamily="@font/poppins_bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -119,29 +116,56 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Olvidé mi contraseña -->
-            <TextView
-                android:id="@+id/tv_forgot_password"
-                android:layout_width="wrap_content"
+            <!-- Fila con Recordar sesión y Olvidé contraseña -->
+            <LinearLayout
+                android:id="@+id/layout_remember_forgot"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_sm"
-                android:text="@string/login_forgot_password"
-                android:textColor="@color/primary"
-                android:textSize="@dimen/text_body"
-                android:fontFamily="@font/poppins_medium"
-                android:padding="@dimen/spacing_xs"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/til_password" />
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                app:layout_constraintTop_toBottomOf="@id/til_password">
+
+                <!-- Checkbox Recordar sesión -->
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/cb_remember_session"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/login_remember_session"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="@dimen/text_caption"
+                    android:fontFamily="@font/poppins_regular"
+                    app:buttonTint="@color/checkbox_tint"
+                    android:checked="false" />
+
+                <!-- Olvidé mi contraseña -->
+                <TextView
+                    android:id="@+id/tv_forgot_password"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/login_forgot_password"
+                    android:textColor="@color/primary"
+                    android:textSize="@dimen/text_caption"
+                    android:fontFamily="@font/poppins_medium"
+                    android:padding="@dimen/spacing_xs" />
+
+            </LinearLayout>
 
             <!-- Botón de Login -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_login"
-                style="@style/AuthButton"
+                style="@style/Widget.Material3.Button"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/button_height"
+                android:layout_height="56dp"
                 android:layout_marginTop="@dimen/spacing_lg"
                 android:text="@string/login_button"
-                app:layout_constraintTop_toBottomOf="@id/tv_forgot_password" />
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_button"
+                android:fontFamily="@font/poppins_semibold"
+                app:backgroundTint="@color/primary"
+                app:cornerRadius="@dimen/button_corner_radius"
+                app:layout_constraintTop_toBottomOf="@id/layout_remember_forgot" />
 
             <!-- Divisor -->
             <LinearLayout
@@ -163,9 +187,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/spacing_md"
-                    android:text="@string/login_or_divider"
+                    android:text="@string/login_or"
                     android:textColor="@color/text_tertiary"
-                    android:textSize="@dimen/text_body"
+                    android:textSize="@dimen/text_caption"
                     android:fontFamily="@font/poppins_regular" />
 
                 <View
@@ -179,14 +203,21 @@
             <!-- Botón de Google -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_google"
-                style="@style/GoogleSignInButton"
+                style="@style/Widget.Material3.Button.OutlinedButton"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/button_height"
+                android:layout_height="56dp"
                 android:layout_marginTop="@dimen/spacing_lg"
                 android:text="@string/login_google"
+                android:textColor="@color/text_primary"
+                android:textSize="@dimen/text_button"
+                android:fontFamily="@font/poppins_medium"
                 app:icon="@drawable/ic_google"
                 app:iconGravity="textStart"
                 app:iconPadding="@dimen/spacing_sm"
+                app:iconTint="@null"
+                app:strokeColor="@color/divider"
+                app:strokeWidth="1dp"
+                app:cornerRadius="@dimen/button_corner_radius"
                 app:layout_constraintTop_toBottomOf="@id/layout_divider" />
 
             <!-- Link a registro -->
@@ -195,8 +226,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_xl"
+                android:layout_marginBottom="@dimen/spacing_xl"
                 android:gravity="center"
                 android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/btn_google">

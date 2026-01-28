@@ -8,12 +8,14 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.beta.gestionurretausuario.MainActivity
 import com.beta.gestionurretausuario.R
+import com.beta.gestionurretausuario.data.preferences.PreferencesManager
 import com.beta.gestionurretausuario.databinding.ActivityLoginBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -25,6 +27,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var firestore: FirebaseFirestore
+    private lateinit var preferencesManager: PreferencesManager
 
     companion object {
         private const val RC_SIGN_IN = 9001
@@ -39,16 +42,37 @@ class LoginActivity : AppCompatActivity() {
         auth = Firebase.auth
         firestore = FirebaseFirestore.getInstance()
 
+        // Inicializar PreferencesManager
+        preferencesManager = PreferencesManager.getInstance(this)
+
         // Configurar Google Sign In
         configureGoogleSignIn()
 
-        // Verificar si ya está logueado
-        if (auth.currentUser != null) {
-            navigateToMain()
+        // Verificar si hay sesión guardada
+        if (checkSavedSession()) {
             return
         }
 
         setupClickListeners()
+        setupRememberCheckbox()
+    }
+
+    /**
+     * Verifica si hay una sesión guardada y si se debe mantener
+     */
+    private fun checkSavedSession(): Boolean {
+        // Si el usuario tiene "recordar sesión" activado y hay un usuario en Firebase
+        if (preferencesManager.shouldKeepSession() && auth.currentUser != null) {
+            navigateToMain()
+            return true
+        }
+
+        // Si hay usuario en Firebase pero no tiene "recordar sesión", cerrar sesión
+        if (auth.currentUser != null && !preferencesManager.rememberSession) {
+            auth.signOut()
+        }
+
+        return false
     }
 
     private fun configureGoogleSignIn() {
@@ -79,6 +103,20 @@ class LoginActivity : AppCompatActivity() {
         // Link de olvidé contraseña
         binding.tvForgotPassword.setOnClickListener {
             navigateToForgotPassword()
+        }
+    }
+
+    /**
+     * Configura el checkbox de "Recordar sesión"
+     */
+    private fun setupRememberCheckbox() {
+        // Restaurar el estado del checkbox si había una preferencia guardada
+        binding.cbRememberSession.isChecked = preferencesManager.rememberSession
+
+        // Listener para cambios en el checkbox
+        binding.cbRememberSession.setOnCheckedChangeListener { _, isChecked ->
+            // Solo guardamos la preferencia cuando el usuario hace login
+            // Aquí solo actualizamos el estado visual
         }
     }
 
@@ -119,6 +157,10 @@ class LoginActivity : AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 showLoading(false)
                 if (task.isSuccessful) {
+                    val user = auth.currentUser
+                    user?.let {
+                        saveSessionIfRemember(it, "email")
+                    }
                     navigateToMain()
                 } else {
                     handleAuthError(task.exception)
@@ -142,7 +184,7 @@ class LoginActivity : AppCompatActivity() {
                 firebaseAuthWithGoogle(account.idToken!!)
             } catch (e: ApiException) {
                 showLoading(false)
-                Toast.makeText(this, getString(R.string.error_auth_failed), Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.error_google_sign_in), Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -153,10 +195,14 @@ class LoginActivity : AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 showLoading(false)
                 if (task.isSuccessful) {
-                    // Verificar si es un usuario nuevo
+                    val user = auth.currentUser
                     val isNewUser = task.result?.additionalUserInfo?.isNewUser ?: false
-                    if (isNewUser) {
-                        createUserInFirestore()
+
+                    user?.let {
+                        if (isNewUser) {
+                            saveUserToFirestore(it)
+                        }
+                        saveSessionIfRemember(it, "google")
                     }
                     navigateToMain()
                 } else {
@@ -165,9 +211,23 @@ class LoginActivity : AppCompatActivity() {
             }
     }
 
-    private fun createUserInFirestore() {
-        val user = auth.currentUser ?: return
+    /**
+     * Guarda la sesión en SharedPreferences si el checkbox está marcado
+     */
+    private fun saveSessionIfRemember(user: FirebaseUser, provider: String) {
+        val shouldRemember = binding.cbRememberSession.isChecked
 
+        preferencesManager.saveUserSession(
+            userId = user.uid,
+            email = user.email ?: "",
+            name = user.displayName,
+            photoUrl = user.photoUrl?.toString(),
+            provider = provider,
+            remember = shouldRemember
+        )
+    }
+
+    private fun saveUserToFirestore(user: FirebaseUser) {
         val userData = hashMapOf(
             "uid" to user.uid,
             "nombre" to (user.displayName ?: ""),
@@ -201,6 +261,7 @@ class LoginActivity : AppCompatActivity() {
         binding.progressBar.visibility = if (show) View.VISIBLE else View.GONE
         binding.btnLogin.isEnabled = !show
         binding.btnGoogle.isEnabled = !show
+        binding.cbRememberSession.isEnabled = !show
     }
 
     private fun navigateToMain() {

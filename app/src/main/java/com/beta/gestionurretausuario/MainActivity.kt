@@ -3,27 +3,19 @@ package com.beta.gestionurretausuario
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import com.beta.gestionurretausuario.data.preferences.PreferencesManager
 import com.beta.gestionurretausuario.databinding.ActivityMainBinding
 import com.beta.gestionurretausuario.ui.auth.LoginActivity
-import com.beta.gestionurretausuario.ui.clases.ClasesFragment
-import com.beta.gestionurretausuario.ui.eventos.EventosFragment
-import com.beta.gestionurretausuario.ui.examenes.ExamenesFragment
-import com.beta.gestionurretausuario.ui.home.HomeFragment
-import com.beta.gestionurretausuario.ui.noticias.NoticiasFragment
-import com.beta.gestionurretausuario.ui.pagos.PagosFragment
-import com.beta.gestionurretausuario.ui.perfil.PerfilFragment
-import com.beta.gestionurretausuario.ui.tienda.TiendaFragment
+import com.beta.gestionurretausuario.ui.fragments.*
 import com.bumptech.glide.Glide
-import com.google.android.material.button.MaterialButton
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -33,21 +25,19 @@ import com.google.firebase.ktx.Firebase
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var drawerLayout: DrawerLayout
-    private lateinit var navigationView: NavigationView
-    private lateinit var toggle: ActionBarDrawerToggle
-
     private lateinit var auth: FirebaseAuth
     private lateinit var firestore: FirebaseFirestore
+    private lateinit var preferencesManager: PreferencesManager
 
-    // Views del header del drawer
-    private lateinit var headerView: View
+    // Views del header del NavigationView
     private lateinit var ivUserAvatar: ImageView
     private lateinit var tvUserName: TextView
     private lateinit var tvBeltRank: TextView
-    private lateinit var btnCloseDrawer: ImageButton
     private lateinit var viewBeltColor: View
-    private lateinit var btnLogout: MaterialButton
+
+    // Drawer y NavigationView
+    private val drawerLayout by lazy { binding.drawerLayout }
+    private val navigationView by lazy { binding.navigationView }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,76 +48,55 @@ class MainActivity : AppCompatActivity() {
         auth = Firebase.auth
         firestore = FirebaseFirestore.getInstance()
 
-        // Verificar si el usuario está logueado
+        // Inicializar PreferencesManager
+        preferencesManager = PreferencesManager.getInstance(this)
+
+        // Verificar autenticación
         if (auth.currentUser == null) {
             navigateToLogin()
             return
         }
 
-        setupViews()
-        setupDrawer()
-        setupNavigation()
+        setupToolbar()
+        setupNavigationDrawer()
         loadUserData()
 
         // Cargar fragment inicial
         if (savedInstanceState == null) {
             loadFragment(HomeFragment())
             navigationView.setCheckedItem(R.id.nav_inicio)
-            updateToolbarTitle(getString(R.string.menu_inicio))
         }
     }
 
-    private fun setupViews() {
-        drawerLayout = binding.drawerLayout
-        navigationView = binding.navView
-
-        // Configurar Toolbar
+    private fun setupToolbar() {
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
-        // Obtener views del header
-        headerView = navigationView.getHeaderView(0)
+        // Abrir drawer al pulsar el icono del menú
+        binding.toolbar.setNavigationOnClickListener {
+            drawerLayout.openDrawer(GravityCompat.START)
+        }
+    }
+
+    private fun setupNavigationDrawer() {
+        // Obtener el header del NavigationView
+        val headerView = navigationView.getHeaderView(0)
         ivUserAvatar = headerView.findViewById(R.id.iv_user_avatar)
         tvUserName = headerView.findViewById(R.id.tv_user_name)
         tvBeltRank = headerView.findViewById(R.id.tv_belt_rank)
-        btnCloseDrawer = headerView.findViewById(R.id.btn_close_drawer)
         viewBeltColor = headerView.findViewById(R.id.view_belt_color)
 
-        // Obtener botón de logout del footer del drawer
-        btnLogout = navigationView.findViewById(R.id.btn_logout)
-
         // Click en el header para ir al perfil
-        headerView.findViewById<View>(R.id.nav_header_container).setOnClickListener {
+        headerView.setOnClickListener {
             navigateToProfile()
         }
 
-        // Click para cerrar el drawer
-        btnCloseDrawer.setOnClickListener {
-            drawerLayout.closeDrawer(GravityCompat.START)
-        }
-
-        // Click para logout
-        btnLogout.setOnClickListener {
+        // Botón de logout en el header
+        headerView.findViewById<ImageView>(R.id.iv_logout)?.setOnClickListener {
             showLogoutDialog()
         }
-    }
 
-    private fun setupDrawer() {
-        toggle = ActionBarDrawerToggle(
-            this,
-            drawerLayout,
-            binding.toolbar,
-            R.string.nav_drawer_open,
-            R.string.nav_drawer_close
-        )
-        drawerLayout.addDrawerListener(toggle)
-        toggle.syncState()
-
-        // Personalizar el icono del drawer
-        toggle.drawerArrowDrawable.color = getColor(R.color.text_primary)
-    }
-
-    private fun setupNavigation() {
+        // Configurar navegación del menú
         navigationView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.nav_inicio -> {
@@ -258,7 +227,20 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun logout() {
+        // Limpiar sesión de SharedPreferences
+        preferencesManager.clearSession()
+
+        // Cerrar sesión de Firebase
         auth.signOut()
+
+        // Cerrar sesión de Google si estaba logueado con Google
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
+        val googleSignInClient = GoogleSignIn.getClient(this, gso)
+        googleSignInClient.signOut()
+
         navigateToLogin()
     }
 
@@ -269,6 +251,7 @@ class MainActivity : AppCompatActivity() {
         finish()
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START)
