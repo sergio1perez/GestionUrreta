@@ -36,6 +36,16 @@
     <string name="login_google">Continuar con Google</string>
     <string name="login_remember_session">Recordar en este dispositivo</string>
 
+    <!-- Link Account -->
+    <string name="link_account_title">Vincular cuenta</string>
+    <string name="link_account_message">Ya existe una cuenta con este email. Introduce tu contraseña para vincular tu cuenta de Google.</string>
+    <string name="btn_link">Vincular</string>
+    <string name="btn_cancel">Cancelar</string>
+    <string name="account_linked_success">¡Cuenta vinculada correctamente!</string>
+    <string name="error_account_already_linked">Esta cuenta de Google ya está vinculada a otro usuario</string>
+    <string name="error_linking_account">Error al vincular la cuenta</string>
+    <string name="error_too_many_attempts">Demasiados intentos fallidos. Inténtalo más tarde.</string>
+
     <!-- Auth - Registro -->
     <string name="register_title">Crear Cuenta</string>
     <string name="register_subtitle">Únete a nuestra comunidad</string>
@@ -50,11 +60,35 @@
     <string name="register_terms">Al registrarte, aceptas nuestros</string>
     <string name="register_terms_link">Términos y Condiciones</string>
 
+    <!-- Errores de autenticación adicionales -->
+    <string name="error_invalid_credentials">Correo o contraseña incorrectos</string>
+    <string name="error_login_failed">Error al iniciar sesión</string>
+    <string name="error_register_failed">Error al crear la cuenta</string>
+
     <!-- Auth - Recuperar contraseña -->
     <string name="forgot_password_title">Recuperar Contraseña</string>
     <string name="forgot_password_subtitle">Te enviaremos un enlace para restablecer tu contraseña</string>
     <string name="forgot_password_button">Enviar enlace</string>
     <string name="forgot_password_back">Volver al inicio de sesión</string>
+
+    <!-- Verify Email Screen -->
+    <string name="verify_email_title">Verifica tu email</string>
+    <string name="verify_email_subtitle">Te hemos enviado un correo de verificación. Por favor, revisa tu bandeja de entrada y haz clic en el enlace para activar tu cuenta.</string>
+    <string name="verification_email_sent_to">Email enviado a: %1$s</string>
+    <string name="verify_instructions_title">Instrucciones:</string>
+    <string name="verify_instructions_1">1. Abre tu correo electrónico</string>
+    <string name="verify_instructions_2">2. Busca el email de Urreta Taekwondo</string>
+    <string name="verify_instructions_3">3. Haz clic en el enlace de verificación</string>
+    <string name="btn_check_verification">Ya he verificado mi email</string>
+    <string name="resend_email">Reenviar email</string>
+    <string name="resend_in_seconds">Reenviar en %1$d s</string>
+    <string name="change_email">Usar otro email</string>
+    <string name="email_not_verified_yet">Tu email aún no ha sido verificado. Por favor, revisa tu correo.</string>
+    <string name="verification_email_resent">Email de verificación reenviado</string>
+    <string name="error_sending_verification">Error al enviar el email de verificación</string>
+    <string name="error_checking_verification">Error al comprobar la verificación</string>
+    <string name="error_profile_update">Error al actualizar el perfil</string>
+    <string name="error_email_not_verified">Debes verificar tu email antes de iniciar sesión</string>
 
     <!-- Errores -->
     <string name="error_email_required">El correo es obligatorio</string>

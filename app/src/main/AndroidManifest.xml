@@ -35,6 +35,13 @@
             android:exported="false"
             android:theme="@style/Theme.GestionUrretaUsuario.NoActionBar" />
 
+        <!-- Verify Activity -->
+        <activity
+            android:name=".ui.auth.VerifyEmailActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.GestionUrretaUsuario" />
+
         <!-- Forgot Password Activity -->
         <activity
             android:name=".ui.auth.ForgotPasswordActivity"
@@ -46,6 +53,7 @@
             android:name=".MainActivity"
             android:exported="false"
             android:theme="@style/Theme.GestionUrretaUsuario.NoActionBar" />
+
 
     </application>
 

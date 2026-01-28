@@ -11,12 +11,11 @@ import com.beta.gestionurretausuario.R
 import com.beta.gestionurretausuario.data.preferences.PreferencesManager
 import com.beta.gestionurretausuario.databinding.ActivityLoginBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.auth.*
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
@@ -53,6 +52,11 @@ class LoginActivity : AppCompatActivity() {
             return
         }
 
+        // Verificar si hay verificación pendiente
+        if (checkPendingVerification()) {
+            return
+        }
+
         setupClickListeners()
         setupRememberCheckbox()
     }
@@ -61,17 +65,37 @@ class LoginActivity : AppCompatActivity() {
      * Verifica si hay una sesión guardada y si se debe mantener
      */
     private fun checkSavedSession(): Boolean {
-        // Si el usuario tiene "recordar sesión" activado y hay un usuario en Firebase
         if (preferencesManager.shouldKeepSession() && auth.currentUser != null) {
-            navigateToMain()
-            return true
+            // Verificar que el email esté verificado
+            val user = auth.currentUser!!
+            if (user.isEmailVerified || user.providerData.any { it.providerId == GoogleAuthProvider.PROVIDER_ID }) {
+                navigateToMain()
+                return true
+            }
         }
 
-        // Si hay usuario en Firebase pero no tiene "recordar sesión", cerrar sesión
         if (auth.currentUser != null && !preferencesManager.rememberSession) {
             auth.signOut()
         }
 
+        return false
+    }
+
+    /**
+     * Verifica si hay un email pendiente de verificación
+     */
+    private fun checkPendingVerification(): Boolean {
+        val currentUser = auth.currentUser
+        if (currentUser != null && !currentUser.isEmailVerified) {
+            // Solo verificar si el proveedor es email/password
+            val isEmailProvider = currentUser.providerData.any {
+                it.providerId == EmailAuthProvider.PROVIDER_ID
+            }
+            if (isEmailProvider) {
+                navigateToVerifyEmail()
+                return true
+            }
+        }
         return false
     }
 
@@ -85,39 +109,25 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun setupClickListeners() {
-        // Botón de login
         binding.btnLogin.setOnClickListener {
             loginWithEmail()
         }
 
-        // Botón de Google
         binding.btnGoogle.setOnClickListener {
             signInWithGoogle()
         }
 
-        // Link a registro
         binding.tvRegisterLink.setOnClickListener {
             navigateToRegister()
         }
 
-        // Link de olvidé contraseña
         binding.tvForgotPassword.setOnClickListener {
             navigateToForgotPassword()
         }
     }
 
-    /**
-     * Configura el checkbox de "Recordar sesión"
-     */
     private fun setupRememberCheckbox() {
-        // Restaurar el estado del checkbox si había una preferencia guardada
         binding.cbRememberSession.isChecked = preferencesManager.rememberSession
-
-        // Listener para cambios en el checkbox
-        binding.cbRememberSession.setOnCheckedChangeListener { _, isChecked ->
-            // Solo guardamos la preferencia cuando el usuario hace login
-            // Aquí solo actualizamos el estado visual
-        }
     }
 
     private fun loginWithEmail() {
@@ -145,24 +155,30 @@ class LoginActivity : AppCompatActivity() {
             return
         }
 
-        // Limpiar errores
         binding.tilEmail.error = null
         binding.tilPassword.error = null
 
-        // Mostrar loading
         showLoading(true)
 
-        // Login con Firebase
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
-                showLoading(false)
                 if (task.isSuccessful) {
                     val user = auth.currentUser
-                    user?.let {
-                        saveSessionIfRemember(it, "email")
+                    if (user != null) {
+                        // Verificar si el email está verificado
+                        if (user.isEmailVerified) {
+                            saveSessionIfRemember(user, "email")
+                            showLoading(false)
+                            navigateToMain()
+                        } else {
+                            showLoading(false)
+                            // Email no verificado, enviar a pantalla de verificación
+                            preferencesManager.pendingVerificationEmail = user.email
+                            navigateToVerifyEmail()
+                        }
                     }
-                    navigateToMain()
                 } else {
+                    showLoading(false)
                     handleAuthError(task.exception)
                 }
             }
@@ -181,7 +197,7 @@ class LoginActivity : AppCompatActivity() {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
                 val account = task.getResult(ApiException::class.java)
-                firebaseAuthWithGoogle(account.idToken!!)
+                handleGoogleSignIn(account)
             } catch (e: ApiException) {
                 showLoading(false)
                 Toast.makeText(this, getString(R.string.error_google_sign_in), Toast.LENGTH_SHORT).show()
@@ -189,8 +205,139 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun firebaseAuthWithGoogle(idToken: String) {
-        val credential = GoogleAuthProvider.getCredential(idToken, null)
+    /**
+     * Maneja el inicio de sesión con Google, incluyendo la vinculación de cuentas
+     */
+    private fun handleGoogleSignIn(account: GoogleSignInAccount) {
+        val credential = GoogleAuthProvider.getCredential(account.idToken, null)
+        val googleEmail = account.email
+
+        // Primero verificar si existe una cuenta con este email
+        if (googleEmail != null) {
+            auth.fetchSignInMethodsForEmail(googleEmail)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        val signInMethods = task.result?.signInMethods ?: emptyList()
+
+                        when {
+                            // Si ya existe cuenta con email/password, vincular
+                            signInMethods.contains(EmailAuthProvider.EMAIL_PASSWORD_SIGN_IN_METHOD) &&
+                                    !signInMethods.contains(GoogleAuthProvider.GOOGLE_SIGN_IN_METHOD) -> {
+                                // Existe cuenta email/password pero no Google - Intentar vincular
+                                linkGoogleToExistingAccount(credential, googleEmail)
+                            }
+                            else -> {
+                                // No existe cuenta o ya tiene Google - Login normal
+                                firebaseAuthWithGoogle(credential)
+                            }
+                        }
+                    } else {
+                        // Error al verificar, intentar login normal
+                        firebaseAuthWithGoogle(credential)
+                    }
+                }
+        } else {
+            firebaseAuthWithGoogle(credential)
+        }
+    }
+
+    /**
+     * Vincula la cuenta de Google a una cuenta existente de email/password
+     */
+    private fun linkGoogleToExistingAccount(credential: AuthCredential, email: String) {
+        // Informar al usuario que necesita autenticarse primero
+        showLoading(false)
+
+        // Mostrar diálogo pidiendo la contraseña
+        showLinkAccountDialog(email, credential)
+    }
+
+    /**
+     * Muestra un diálogo para vincular la cuenta de Google con la existente
+     */
+    private fun showLinkAccountDialog(email: String, googleCredential: AuthCredential) {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_link_account, null)
+        val etPassword = dialogView.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.et_dialog_password)
+        val tvEmail = dialogView.findViewById<android.widget.TextView>(R.id.tv_dialog_email)
+
+        tvEmail.text = email
+
+        val dialog = androidx.appcompat.app.AlertDialog.Builder(this, R.style.AlertDialogTheme)
+            .setTitle(getString(R.string.link_account_title))
+            .setMessage(getString(R.string.link_account_message))
+            .setView(dialogView)
+            .setPositiveButton(getString(R.string.btn_link)) { _, _ ->
+                val password = etPassword.text.toString()
+                if (password.isNotEmpty()) {
+                    performAccountLinking(email, password, googleCredential)
+                } else {
+                    Toast.makeText(this, getString(R.string.error_password_required), Toast.LENGTH_SHORT).show()
+                }
+            }
+            .setNegativeButton(getString(R.string.btn_cancel)) { dialog, _ ->
+                dialog.dismiss()
+                googleSignInClient.signOut() // Limpiar el intento de Google
+            }
+            .create()
+
+        dialog.show()
+    }
+
+    /**
+     * Realiza la vinculación de cuentas
+     */
+    private fun performAccountLinking(email: String, password: String, googleCredential: AuthCredential) {
+        showLoading(true)
+
+        // Primero autenticar con email/password
+        auth.signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener { signInTask ->
+                if (signInTask.isSuccessful) {
+                    val user = auth.currentUser
+                    if (user != null) {
+                        // Verificar que el email esté verificado antes de vincular
+                        if (!user.isEmailVerified) {
+                            showLoading(false)
+                            Toast.makeText(
+                                this,
+                                getString(R.string.error_email_not_verified),
+                                Toast.LENGTH_LONG
+                            ).show()
+                            preferencesManager.pendingVerificationEmail = email
+                            navigateToVerifyEmail()
+                            return@addOnCompleteListener
+                        }
+
+                        // Ahora vincular la cuenta de Google
+                        user.linkWithCredential(googleCredential)
+                            .addOnCompleteListener { linkTask ->
+                                showLoading(false)
+                                if (linkTask.isSuccessful) {
+                                    // Actualizar Firestore con el nuevo proveedor
+                                    updateUserProviders(user.uid)
+                                    Toast.makeText(
+                                        this,
+                                        getString(R.string.account_linked_success),
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                    saveSessionIfRemember(user, "google")
+                                    navigateToMain()
+                                } else {
+                                    handleLinkError(linkTask.exception)
+                                }
+                            }
+                    }
+                } else {
+                    showLoading(false)
+                    handleAuthError(signInTask.exception)
+                }
+            }
+    }
+
+    /**
+     * Login normal con Google (sin vinculación)
+     */
+    private fun firebaseAuthWithGoogle(credential: AuthCredential) {
         auth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
                 showLoading(false)
@@ -212,8 +359,31 @@ class LoginActivity : AppCompatActivity() {
     }
 
     /**
-     * Guarda la sesión en SharedPreferences si el checkbox está marcado
+     * Actualiza los proveedores del usuario en Firestore
      */
+    private fun updateUserProviders(uid: String) {
+        val user = auth.currentUser ?: return
+        val providers = user.providerData.map { it.providerId }.filter { it != "firebase" }
+
+        firestore.collection("usuarios")
+            .document(uid)
+            .update(
+                mapOf(
+                    "providers" to providers,
+                    "fotoUrl" to (user.photoUrl?.toString() ?: "")
+                )
+            )
+    }
+
+    private fun handleLinkError(exception: Exception?) {
+        val message = when (exception) {
+            is FirebaseAuthUserCollisionException -> getString(R.string.error_account_already_linked)
+            else -> getString(R.string.error_linking_account)
+        }
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+        googleSignInClient.signOut()
+    }
+
     private fun saveSessionIfRemember(user: FirebaseUser, provider: String) {
         val shouldRemember = binding.cbRememberSession.isChecked
 
@@ -228,6 +398,8 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun saveUserToFirestore(user: FirebaseUser) {
+        val providers = user.providerData.map { it.providerId }.filter { it != "firebase" }
+
         val userData = hashMapOf(
             "uid" to user.uid,
             "nombre" to (user.displayName ?: ""),
@@ -236,7 +408,10 @@ class LoginActivity : AppCompatActivity() {
             "cinturon" to "Blanco",
             "gup" to "10° Kup",
             "fechaRegistro" to com.google.firebase.Timestamp.now(),
-            "activo" to true
+            "activo" to true,
+            "tipoUsuario" to "alumno",
+            "emailVerificado" to true, // Google ya verifica el email
+            "providers" to providers
         )
 
         firestore.collection("usuarios")
@@ -246,22 +421,22 @@ class LoginActivity : AppCompatActivity() {
 
     private fun handleAuthError(exception: Exception?) {
         val message = when {
-            exception?.message?.contains("no user record") == true ->
-                getString(R.string.error_user_not_found)
-            exception?.message?.contains("password is invalid") == true ->
-                getString(R.string.error_wrong_password)
+            exception?.message?.contains("no user record") == true ||
+                    exception?.message?.contains("invalid") == true ->
+                getString(R.string.error_invalid_credentials)
             exception?.message?.contains("network") == true ->
                 getString(R.string.error_network)
-            else -> getString(R.string.error_auth_failed)
+            exception?.message?.contains("blocked") == true ->
+                getString(R.string.error_too_many_attempts)
+            else -> getString(R.string.error_login_failed)
         }
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
     private fun showLoading(show: Boolean) {
         binding.progressBar.visibility = if (show) View.VISIBLE else View.GONE
         binding.btnLogin.isEnabled = !show
         binding.btnGoogle.isEnabled = !show
-        binding.cbRememberSession.isEnabled = !show
     }
 
     private fun navigateToMain() {
@@ -273,6 +448,11 @@ class LoginActivity : AppCompatActivity() {
 
     private fun navigateToRegister() {
         startActivity(Intent(this, RegisterActivity::class.java))
+    }
+
+    private fun navigateToVerifyEmail() {
+        val intent = Intent(this, VerifyEmailActivity::class.java)
+        startActivity(intent)
     }
 
     private fun navigateToForgotPassword() {

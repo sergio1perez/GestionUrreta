@@ -6,17 +6,11 @@ import android.util.Patterns
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.beta.gestionurretausuario.MainActivity
 import com.beta.gestionurretausuario.R
 import com.beta.gestionurretausuario.data.preferences.PreferencesManager
 import com.beta.gestionurretausuario.databinding.ActivityRegisterBinding
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.auth.ktx.userProfileChangeRequest
 import com.google.firebase.firestore.FirebaseFirestore
@@ -26,13 +20,8 @@ class RegisterActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRegisterBinding
     private lateinit var auth: FirebaseAuth
-    private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var firestore: FirebaseFirestore
     private lateinit var preferencesManager: PreferencesManager
-
-    companion object {
-        private const val RC_SIGN_IN = 9001
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,30 +35,13 @@ class RegisterActivity : AppCompatActivity() {
         // Inicializar PreferencesManager
         preferencesManager = PreferencesManager.getInstance(this)
 
-        // Configurar Google Sign In
-        configureGoogleSignIn()
-
         setupClickListeners()
-    }
-
-    private fun configureGoogleSignIn() {
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
-            .requestEmail()
-            .build()
-
-        googleSignInClient = GoogleSignIn.getClient(this, gso)
     }
 
     private fun setupClickListeners() {
         // Botón de registro
         binding.btnRegister.setOnClickListener {
             registerWithEmail()
-        }
-
-        // Botón de Google
-        binding.btnGoogle.setOnClickListener {
-            signInWithGoogle()
         }
 
         // Link a login
@@ -141,11 +113,12 @@ class RegisterActivity : AppCompatActivity() {
                         }
                         it.updateProfile(profileUpdates)
                             .addOnCompleteListener { profileTask ->
-                                showLoading(false)
                                 if (profileTask.isSuccessful) {
-                                    saveUserToFirestore(it, name)
-                                    saveSession(it, "email")
-                                    navigateToMain()
+                                    // Enviar email de verificación
+                                    sendVerificationEmail(it, name)
+                                } else {
+                                    showLoading(false)
+                                    Toast.makeText(this, getString(R.string.error_profile_update), Toast.LENGTH_SHORT).show()
                                 }
                             }
                     }
@@ -156,50 +129,34 @@ class RegisterActivity : AppCompatActivity() {
             }
     }
 
-    private fun signInWithGoogle() {
-        showLoading(true)
-        val signInIntent = googleSignInClient.signInIntent
-        startActivityForResult(signInIntent, RC_SIGN_IN)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (requestCode == RC_SIGN_IN) {
-            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-            try {
-                val account = task.getResult(ApiException::class.java)
-                firebaseAuthWithGoogle(account.idToken!!)
-            } catch (e: ApiException) {
-                showLoading(false)
-                Toast.makeText(this, getString(R.string.error_google_sign_in), Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
-
-    private fun firebaseAuthWithGoogle(idToken: String) {
-        val credential = GoogleAuthProvider.getCredential(idToken, null)
-        auth.signInWithCredential(credential)
-            .addOnCompleteListener(this) { task ->
+    /**
+     * Envía el email de verificación y navega a la pantalla de verificación
+     */
+    private fun sendVerificationEmail(user: FirebaseUser, name: String) {
+        user.sendEmailVerification()
+            .addOnCompleteListener { task ->
                 showLoading(false)
                 if (task.isSuccessful) {
-                    val user = auth.currentUser
-                    val isNewUser = task.result?.additionalUserInfo?.isNewUser ?: false
+                    // Guardar datos en Firestore (pero con estado no verificado)
+                    saveUserToFirestore(user, name, emailVerified = false)
 
-                    user?.let {
-                        if (isNewUser) {
-                            saveUserToFirestore(it, it.displayName ?: "")
-                        }
-                        saveSession(it, "google")
-                    }
-                    navigateToMain()
+                    // Guardar email temporalmente para la pantalla de verificación
+                    preferencesManager.pendingVerificationEmail = user.email
+                    preferencesManager.pendingVerificationName = name
+
+                    // Navegar a pantalla de verificación
+                    navigateToVerifyEmail()
                 } else {
-                    handleAuthError(task.exception)
+                    Toast.makeText(
+                        this,
+                        getString(R.string.error_sending_verification),
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
             }
     }
 
-    private fun saveUserToFirestore(user: FirebaseUser, name: String) {
+    private fun saveUserToFirestore(user: FirebaseUser, name: String, emailVerified: Boolean) {
         val userData = hashMapOf(
             "uid" to user.uid,
             "nombre" to name,
@@ -209,7 +166,8 @@ class RegisterActivity : AppCompatActivity() {
             "gup" to "10° Kup",
             "fechaRegistro" to com.google.firebase.Timestamp.now(),
             "activo" to true,
-            "tipoUsuario" to "alumno"
+            "tipoUsuario" to "alumno",
+            "emailVerificado" to emailVerified
         )
 
         firestore.collection("usuarios")
@@ -217,15 +175,11 @@ class RegisterActivity : AppCompatActivity() {
             .set(userData)
     }
 
-    private fun saveSession(user: FirebaseUser, provider: String) {
-        preferencesManager.saveUserSession(
-            userId = user.uid,
-            email = user.email ?: "",
-            name = user.displayName,
-            photoUrl = user.photoUrl?.toString(),
-            provider = provider,
-            remember = true // En registro, siempre recordamos la sesión
-        )
+    private fun navigateToVerifyEmail() {
+        val intent = Intent(this, VerifyEmailActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+        finish()
     }
 
     private fun handleAuthError(exception: Exception?) {
@@ -234,21 +188,13 @@ class RegisterActivity : AppCompatActivity() {
                 getString(R.string.error_email_in_use)
             exception?.message?.contains("network") == true ->
                 getString(R.string.error_network)
-            else -> getString(R.string.error_auth_failed)
+            else -> getString(R.string.error_register_failed)
         }
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
     private fun showLoading(show: Boolean) {
         binding.progressBar.visibility = if (show) View.VISIBLE else View.GONE
         binding.btnRegister.isEnabled = !show
-        binding.btnGoogle.isEnabled = !show
-    }
-
-    private fun navigateToMain() {
-        val intent = Intent(this, MainActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        startActivity(intent)
-        finish()
     }
 }

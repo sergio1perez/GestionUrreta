@@ -46,6 +46,10 @@ class PreferencesManager(context: Context) {
         private const val KEY_FIRST_TIME = "first_time"
         private const val KEY_ONBOARDING_COMPLETED = "onboarding_completed"
 
+        // Keys para verificación pendiente
+        private const val KEY_PENDING_VERIFICATION_EMAIL = "pending_verification_email"
+        private const val KEY_PENDING_VERIFICATION_NAME = "pending_verification_name"
+
         // Singleton
         @Volatile
         private var INSTANCE: PreferencesManager? = null
@@ -269,6 +273,30 @@ class PreferencesManager(context: Context) {
     var onboardingCompleted: Boolean
         get() = prefs.getBoolean(KEY_ONBOARDING_COMPLETED, false)
         set(value) = prefs.edit { putBoolean(KEY_ONBOARDING_COMPLETED, value) }
+
+    /**
+     * Email pendiente de verificación
+     */
+    var pendingVerificationEmail: String?
+        get() = prefs.getString(KEY_PENDING_VERIFICATION_EMAIL, null)
+        set(value) = prefs.edit { putString(KEY_PENDING_VERIFICATION_EMAIL, value) }
+
+    /**
+     * Nombre del usuario pendiente de verificación
+     */
+    var pendingVerificationName: String?
+        get() = prefs.getString(KEY_PENDING_VERIFICATION_NAME, null)
+        set(value) = prefs.edit { putString(KEY_PENDING_VERIFICATION_NAME, value) }
+
+    /**
+     * Limpia los datos de verificación pendiente
+     */
+    fun clearPendingVerification() {
+        prefs.edit {
+            remove(KEY_PENDING_VERIFICATION_EMAIL)
+            remove(KEY_PENDING_VERIFICATION_NAME)
+        }
+    }
 
     // =============================================
     // FUNCIONES GENERALES
