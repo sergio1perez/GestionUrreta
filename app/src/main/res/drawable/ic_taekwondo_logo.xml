@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="120dp"
+    android:height="120dp"
+    android:viewportWidth="120"
+    android:viewportHeight="120">
+
+    <!-- Círculo de fondo -->
+    <path
+        android:fillColor="@color/primary"
+        android:pathData="M60,60m-55,0a55,55 0,1 1,110 0a55,55 0,1 1,-110 0" />
+
+    <!-- Círculo interior -->
+    <path
+        android:fillColor="@color/background_dark"
+        android:pathData="M60,60m-50,0a50,50 0,1 1,100 0a50,50 0,1 1,-100 0" />
+
+    <!-- Símbolo TKD simplificado - parte superior -->
+    <path
+        android:fillColor="@color/primary"
+        android:pathData="M60,25 L50,40 L70,40 Z" />
+
+    <!-- Símbolo TKD - parte central -->
+    <path
+        android:fillColor="@color/primary"
+        android:pathData="M35,50 L60,65 L85,50 L60,55 Z" />
+
+    <!-- Símbolo TKD - parte inferior -->
+    <path
+        android:fillColor="@color/primary"
+        android:pathData="M45,70 L60,95 L75,70 L60,85 Z" />
+
+    <!-- Texto "TKD" -->
+    <path
+        android:fillColor="@color/white"
+        android:pathData="M40,90 L40,100 M38,90 L42,90 M35,95 L45,95" />
+</vector>

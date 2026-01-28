@@ -208,7 +208,6 @@
     <string name="pagos_pendientes">Pagos Pendientes</string>
     <string name="pagos_realizados">Pagos Realizados</string>
     <string name="pagos_empty">No hay pagos</string>
-    <string name="pago_pendiente">Pendiente</string>
     <string name="pago_pagado">Pagado</string>
     <string name="pago_vencido">Vencido</string>
     <string name="pagos_estado_cuota">ESTADO DE CUOTA</string>

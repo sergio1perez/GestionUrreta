@@ -63,7 +63,7 @@
                         android:id="@+id/tv_estado"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/pagos_pendiente"
+                        android:text="@string/pagos_pendientes"
                         android:textColor="@color/warning"
                         android:textSize="@dimen/text_caption"
                         android:fontFamily="@font/poppins_semibold"

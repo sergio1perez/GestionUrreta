@@ -111,7 +111,7 @@ class ClasesAdapter(
                 }
                 else -> {
                     tvEstado.text = "● Completo"
-                    tvEstado.setTextColor(context.getColor(R.color.error))
+                    tvEstado.setTextColor(context.getColor(R.color.status_error))
                 }
             }
 

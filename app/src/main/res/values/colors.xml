@@ -14,8 +14,10 @@
     <color name="background_dark">#121212</color>
     <color name="background_card">#1E1E1E</color>
     <color name="background_surface">#2D2D2D</color>
+    <color name="background_drawer">#1A1A1A</color>
     <color name="card_dark">#1E1E1E</color>
     <color name="surface">#1E1E1E</color>
+    <color name="surface_dark">#252525</color>
 
     <!-- Text Colors -->
     <color name="text_primary">#FFFFFF</color>
@@ -23,9 +25,9 @@
     <color name="text_tertiary">#808080</color>
     <color name="text_disabled">#4D4D4D</color>
     <color name="text_on_primary">#000000</color>
+    <color name="text_hint">#666666</color>
 
     <!-- Input Colors -->
-    <color name="input_stroke_color">#404040</color>
     <color name="input_stroke_focused">#00BFA5</color>
     <color name="input_background">#1E1E1E</color>
 
@@ -45,6 +47,7 @@
     <color name="status_warning">#FF9800</color>
     <color name="status_error">#F44336</color>
     <color name="status_info">#2196F3</color>
+    <color name="warning">#FFA726</color>
 
     <!-- Payment Status Colors -->
     <color name="payment_pending">#FF9800</color>
@@ -52,16 +55,24 @@
     <color name="payment_overdue">#F44336</color>
 
     <!-- Checkbox Colors -->
-    <color name="checkbox_tint">#00BFA5</color>
     <color name="checkbox_unchecked">#808080</color>
+
+    <!-- Menu/Navigation Colors -->
+    <color name="menu_item_selected_text">#00BFA5</color>
+    <color name="menu_item_selected_bg">#1A2F2C</color>
+
+    <!-- Accent Colors -->
+    <color name="accent_green">#4CAF50</color>
 
     <!-- Standard Colors -->
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="transparent">#00000000</color>
+    <color name="semi_transparent_white">#80FFFFFF</color>
 
     <!-- Ripple -->
     <color name="ripple_color">#2000BFA5</color>
+    <color name="ripple_light">#1AFFFFFF</color>
 
     <!-- Overlay -->
     <color name="overlay_dark">#80000000</color>

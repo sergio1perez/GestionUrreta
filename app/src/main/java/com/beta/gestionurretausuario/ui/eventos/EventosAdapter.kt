@@ -64,7 +64,7 @@ class EventosAdapter(
             // Color según tipo
             val tipoColor = when (tipo.lowercase()) {
                 "torneos" -> R.color.primary
-                "seminarios" -> R.color.info
+                "seminarios" -> R.color.status_info
                 "examenes" -> R.color.warning
                 else -> R.color.text_secondary
             }

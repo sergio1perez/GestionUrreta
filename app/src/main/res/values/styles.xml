@@ -53,35 +53,4 @@
         <item name="chipIconVisible">false</item>
         <item name="checkedIconVisible">false</item>
     </style>
-
-    <!-- Estilo para AlertDialog -->
-    <style name="AlertDialogTheme" parent="ThemeOverlay.Material3.MaterialAlertDialog">
-        <item name="colorSurface">@color/card_dark</item>
-        <item name="colorOnSurface">@color/text_primary</item>
-        <item name="colorPrimary">@color/primary</item>
-        <item name="materialAlertDialogTitleTextStyle">@style/AlertDialogTitleStyle</item>
-        <item name="materialAlertDialogBodyTextStyle">@style/AlertDialogBodyStyle</item>
-        <item name="buttonBarPositiveButtonStyle">@style/AlertDialogPositiveButton</item>
-        <item name="buttonBarNegativeButtonStyle">@style/AlertDialogNegativeButton</item>
-    </style>
-
-    <style name="AlertDialogTitleStyle" parent="MaterialAlertDialog.Material3.Title.Text">
-        <item name="android:textColor">@color/text_primary</item>
-        <item name="fontFamily">@font/poppins_semibold</item>
-    </style>
-
-    <style name="AlertDialogBodyStyle" parent="MaterialAlertDialog.Material3.Body.Text">
-        <item name="android:textColor">@color/text_secondary</item>
-        <item name="fontFamily">@font/poppins_regular</item>
-    </style>
-
-    <style name="AlertDialogPositiveButton" parent="Widget.Material3.Button.TextButton">
-        <item name="android:textColor">@color/primary</item>
-        <item name="fontFamily">@font/poppins_medium</item>
-    </style>
-
-    <style name="AlertDialogNegativeButton" parent="Widget.Material3.Button.TextButton">
-        <item name="android:textColor">@color/text_secondary</item>
-        <item name="fontFamily">@font/poppins_medium</item>
-    </style>
 </resources>

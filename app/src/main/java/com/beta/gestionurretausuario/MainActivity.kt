@@ -12,7 +12,14 @@ import androidx.fragment.app.Fragment
 import com.beta.gestionurretausuario.data.preferences.PreferencesManager
 import com.beta.gestionurretausuario.databinding.ActivityMainBinding
 import com.beta.gestionurretausuario.ui.auth.LoginActivity
-import com.beta.gestionurretausuario.ui.fragments.*
+import com.beta.gestionurretausuario.ui.clases.ClasesFragment
+import com.beta.gestionurretausuario.ui.eventos.EventosFragment
+import com.beta.gestionurretausuario.ui.examenes.ExamenesFragment
+import com.beta.gestionurretausuario.ui.home.HomeFragment
+import com.beta.gestionurretausuario.ui.noticias.NoticiasFragment
+import com.beta.gestionurretausuario.ui.pagos.PagosFragment
+import com.beta.gestionurretausuario.ui.perfil.PerfilFragment
+import com.beta.gestionurretausuario.ui.tienda.TiendaFragment
 import com.bumptech.glide.Glide
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -37,7 +44,7 @@ class MainActivity : AppCompatActivity() {
 
     // Drawer y NavigationView
     private val drawerLayout by lazy { binding.drawerLayout }
-    private val navigationView by lazy { binding.navigationView }
+    private val navView by lazy { binding.navView }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,7 +71,7 @@ class MainActivity : AppCompatActivity() {
         // Cargar fragment inicial
         if (savedInstanceState == null) {
             loadFragment(HomeFragment())
-            navigationView.setCheckedItem(R.id.nav_inicio)
+            navView.setCheckedItem(R.id.nav_inicio)
         }
     }
 
@@ -79,8 +86,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupNavigationDrawer() {
-        // Obtener el header del NavigationView
-        val headerView = navigationView.getHeaderView(0)
+        // 1. Configuración del Header
+        val headerView = navView.getHeaderView(0)
         ivUserAvatar = headerView.findViewById(R.id.iv_user_avatar)
         tvUserName = headerView.findViewById(R.id.tv_user_name)
         tvBeltRank = headerView.findViewById(R.id.tv_belt_rank)
@@ -91,18 +98,24 @@ class MainActivity : AppCompatActivity() {
             navigateToProfile()
         }
 
-        // Botón de logout en el header
-        headerView.findViewById<ImageView>(R.id.iv_logout)?.setOnClickListener {
+        // --- CORRECCIÓN AQUÍ ---
+        // El botón está en el activity_main.xml (dentro del NavView), NO en el header.
+        // Usamos el ID correcto: btn_logout
+        val btnLogout = navView.findViewById<View>(R.id.btn_logout)
+        btnLogout?.setOnClickListener {
             showLogoutDialog()
         }
+        // -----------------------
 
         // Configurar navegación del menú
-        navigationView.setNavigationItemSelectedListener { menuItem ->
+        navView.setNavigationItemSelectedListener { menuItem ->
+            // ... (el resto de tu código sigue igual)
             when (menuItem.itemId) {
                 R.id.nav_inicio -> {
                     loadFragment(HomeFragment())
                     updateToolbarTitle(getString(R.string.menu_inicio))
                 }
+                // ... resto de los items
                 R.id.nav_clases -> {
                     loadFragment(ClasesFragment())
                     updateToolbarTitle(getString(R.string.menu_clases))
@@ -212,7 +225,7 @@ class MainActivity : AppCompatActivity() {
         loadFragment(PerfilFragment())
         updateToolbarTitle(getString(R.string.menu_perfil))
         // Desmarcar items del menú
-        navigationView.setCheckedItem(View.NO_ID)
+        navView.setCheckedItem(View.NO_ID)
     }
 
     private fun showLogoutDialog() {
