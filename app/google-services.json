@@ -12,7 +12,20 @@
           "package_name": "com.beta.gestionurretausuario"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "181564855339-jorhh76el2bo24dnanoa60h08vkanq6n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.beta.gestionurretausuario",
+            "certificate_hash": "c98bfe6c900befd7fab64b9f4e9b1be5f444f133"
+          }
+        },
+        {
+          "client_id": "181564855339-il43ucitk7q0k7f6grgfqch65bkfne3f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDFunriytk3xLca4sRJyhWp4ftF_QXcXnw"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "181564855339-il43ucitk7q0k7f6grgfqch65bkfne3f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

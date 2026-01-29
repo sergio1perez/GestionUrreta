@@ -2,6 +2,7 @@ package com.beta.gestionurretausuario.ui.auth
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.util.Patterns
 import android.view.View
 import android.widget.Toast
@@ -28,8 +29,13 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var firestore: FirebaseFirestore
     private lateinit var preferencesManager: PreferencesManager
 
+    // Variable para guardar las credenciales de Google temporalmente
+    private var pendingGoogleCredential: AuthCredential? = null
+    private var pendingGoogleEmail: String? = null
+
     companion object {
         private const val RC_SIGN_IN = 9001
+        private const val TAG = "LoginActivity"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -186,8 +192,11 @@ class LoginActivity : AppCompatActivity() {
 
     private fun signInWithGoogle() {
         showLoading(true)
-        val signInIntent = googleSignInClient.signInIntent
-        startActivityForResult(signInIntent, RC_SIGN_IN)
+        // Primero cerrar cualquier sesión anterior de Google para permitir elegir cuenta
+        googleSignInClient.signOut().addOnCompleteListener {
+            val signInIntent = googleSignInClient.signInIntent
+            startActivityForResult(signInIntent, RC_SIGN_IN)
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -200,60 +209,105 @@ class LoginActivity : AppCompatActivity() {
                 handleGoogleSignIn(account)
             } catch (e: ApiException) {
                 showLoading(false)
+                Log.e(TAG, "Google sign in failed: ${e.statusCode}", e)
                 Toast.makeText(this, getString(R.string.error_google_sign_in), Toast.LENGTH_SHORT).show()
             }
         }
     }
 
     /**
-     * Maneja el inicio de sesión con Google, incluyendo la vinculación de cuentas
+     * Maneja el inicio de sesión con Google.
+     *
+     * NUEVO ENFOQUE: En lugar de usar fetchSignInMethodsForEmail (deprecado),
+     * intentamos el login directamente y capturamos la excepción de colisión.
      */
     private fun handleGoogleSignIn(account: GoogleSignInAccount) {
         val credential = GoogleAuthProvider.getCredential(account.idToken, null)
         val googleEmail = account.email
 
-        // Primero verificar si existe una cuenta con este email
-        if (googleEmail != null) {
-            auth.fetchSignInMethodsForEmail(googleEmail)
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        val signInMethods = task.result?.signInMethods ?: emptyList()
+        // Guardar las credenciales para posible vinculación posterior
+        pendingGoogleCredential = credential
+        pendingGoogleEmail = googleEmail
 
-                        when {
-                            // Si ya existe cuenta con email/password, vincular
-                            signInMethods.contains(EmailAuthProvider.EMAIL_PASSWORD_SIGN_IN_METHOD) &&
-                                    !signInMethods.contains(GoogleAuthProvider.GOOGLE_SIGN_IN_METHOD) -> {
-                                // Existe cuenta email/password pero no Google - Intentar vincular
-                                linkGoogleToExistingAccount(credential, googleEmail)
-                            }
-                            else -> {
-                                // No existe cuenta o ya tiene Google - Login normal
-                                firebaseAuthWithGoogle(credential)
-                            }
+        Log.d(TAG, "Attempting Google sign in for email: $googleEmail")
+
+        // Intentar directamente el login con Google
+        auth.signInWithCredential(credential)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    // Login exitoso
+                    showLoading(false)
+                    val user = auth.currentUser
+                    val isNewUser = task.result?.additionalUserInfo?.isNewUser ?: false
+
+                    Log.d(TAG, "Google sign in successful. Is new user: $isNewUser")
+
+                    user?.let {
+                        if (isNewUser) {
+                            saveUserToFirestore(it)
+                        } else {
+                            // Usuario existente - actualizar proveedores en Firestore
+                            updateUserProviders(it.uid)
                         }
-                    } else {
-                        // Error al verificar, intentar login normal
-                        firebaseAuthWithGoogle(credential)
+                        saveSessionIfRemember(it, "google")
                     }
+                    navigateToMain()
+                } else {
+                    // Manejar errores
+                    handleGoogleSignInError(task.exception, googleEmail, credential)
                 }
-        } else {
-            firebaseAuthWithGoogle(credential)
-        }
+            }
     }
 
     /**
-     * Vincula la cuenta de Google a una cuenta existente de email/password
+     * Maneja los errores de inicio de sesión con Google.
+     * Si hay colisión de cuentas, muestra el diálogo para vincular.
      */
-    private fun linkGoogleToExistingAccount(credential: AuthCredential, email: String) {
-        // Informar al usuario que necesita autenticarse primero
+    private fun handleGoogleSignInError(exception: Exception?, email: String?, credential: AuthCredential) {
         showLoading(false)
 
-        // Mostrar diálogo pidiendo la contraseña
-        showLinkAccountDialog(email, credential)
+        Log.e(TAG, "Google sign in error: ${exception?.message}", exception)
+
+        when (exception) {
+            is FirebaseAuthUserCollisionException -> {
+                // Ya existe una cuenta con este email pero con otro proveedor
+                Log.d(TAG, "Account collision detected for email: $email")
+
+                when (exception.errorCode) {
+                    "ERROR_ACCOUNT_EXISTS_WITH_DIFFERENT_CREDENTIAL",
+                    "ERROR_EMAIL_ALREADY_IN_USE" -> {
+                        // Existe cuenta email/password - mostrar diálogo para vincular
+                        if (email != null) {
+                            showLinkAccountDialog(email, credential)
+                        } else {
+                            Toast.makeText(
+                                this,
+                                getString(R.string.error_account_exists),
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    }
+                    else -> {
+                        Toast.makeText(
+                            this,
+                            getString(R.string.error_account_already_linked),
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                }
+            }
+            else -> {
+                // Otro tipo de error
+                handleAuthError(exception)
+            }
+        }
+
+        // Limpiar el intento de Google
+        googleSignInClient.signOut()
     }
 
     /**
-     * Muestra un diálogo para vincular la cuenta de Google con la existente
+     * Muestra un diálogo para vincular la cuenta de Google con la existente de email/password
      */
     private fun showLinkAccountDialog(email: String, googleCredential: AuthCredential) {
         val dialogView = layoutInflater.inflate(R.layout.dialog_link_account, null)
@@ -284,7 +338,9 @@ class LoginActivity : AppCompatActivity() {
     }
 
     /**
-     * Realiza la vinculación de cuentas
+     * Realiza la vinculación de cuentas.
+     * 1. Primero autentica con email/password
+     * 2. Luego vincula la cuenta de Google
      */
     private fun performAccountLinking(email: String, password: String, googleCredential: AuthCredential) {
         showLoading(true)
@@ -313,6 +369,7 @@ class LoginActivity : AppCompatActivity() {
                             .addOnCompleteListener { linkTask ->
                                 showLoading(false)
                                 if (linkTask.isSuccessful) {
+                                    Log.d(TAG, "Account linking successful")
                                     // Actualizar Firestore con el nuevo proveedor
                                     updateUserProviders(user.uid)
                                     Toast.makeText(
@@ -329,31 +386,8 @@ class LoginActivity : AppCompatActivity() {
                     }
                 } else {
                     showLoading(false)
+                    Log.e(TAG, "Email/password sign in failed for linking", signInTask.exception)
                     handleAuthError(signInTask.exception)
-                }
-            }
-    }
-
-    /**
-     * Login normal con Google (sin vinculación)
-     */
-    private fun firebaseAuthWithGoogle(credential: AuthCredential) {
-        auth.signInWithCredential(credential)
-            .addOnCompleteListener(this) { task ->
-                showLoading(false)
-                if (task.isSuccessful) {
-                    val user = auth.currentUser
-                    val isNewUser = task.result?.additionalUserInfo?.isNewUser ?: false
-
-                    user?.let {
-                        if (isNewUser) {
-                            saveUserToFirestore(it)
-                        }
-                        saveSessionIfRemember(it, "google")
-                    }
-                    navigateToMain()
-                } else {
-                    handleAuthError(task.exception)
                 }
             }
     }
@@ -365,6 +399,8 @@ class LoginActivity : AppCompatActivity() {
         val user = auth.currentUser ?: return
         val providers = user.providerData.map { it.providerId }.filter { it != "firebase" }
 
+        Log.d(TAG, "Updating providers for user $uid: $providers")
+
         firestore.collection("usuarios")
             .document(uid)
             .update(
@@ -373,9 +409,14 @@ class LoginActivity : AppCompatActivity() {
                     "fotoUrl" to (user.photoUrl?.toString() ?: "")
                 )
             )
+            .addOnFailureListener { e ->
+                Log.e(TAG, "Failed to update providers", e)
+            }
     }
 
     private fun handleLinkError(exception: Exception?) {
+        Log.e(TAG, "Link error: ${exception?.message}", exception)
+
         val message = when (exception) {
             is FirebaseAuthUserCollisionException -> getString(R.string.error_account_already_linked)
             else -> getString(R.string.error_linking_account)
@@ -414,19 +455,26 @@ class LoginActivity : AppCompatActivity() {
             "providers" to providers
         )
 
+        Log.d(TAG, "Saving new user to Firestore: ${user.uid}")
+
         firestore.collection("usuarios")
             .document(user.uid)
             .set(userData)
+            .addOnFailureListener { e ->
+                Log.e(TAG, "Failed to save user to Firestore", e)
+            }
     }
 
     private fun handleAuthError(exception: Exception?) {
         val message = when {
             exception?.message?.contains("no user record") == true ||
-                    exception?.message?.contains("invalid") == true ->
+                    exception?.message?.contains("invalid") == true ||
+                    exception?.message?.contains("INVALID_LOGIN_CREDENTIALS") == true ->
                 getString(R.string.error_invalid_credentials)
             exception?.message?.contains("network") == true ->
                 getString(R.string.error_network)
-            exception?.message?.contains("blocked") == true ->
+            exception?.message?.contains("blocked") == true ||
+                    exception?.message?.contains("TOO_MANY_ATTEMPTS") == true ->
                 getString(R.string.error_too_many_attempts)
             else -> getString(R.string.error_login_failed)
         }

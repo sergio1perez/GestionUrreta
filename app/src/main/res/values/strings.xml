@@ -105,7 +105,8 @@
     <string name="error_email_in_use">Este correo ya está registrado</string>
     <string name="error_google_sign_in">Error al iniciar sesión con Google</string>
     <string name="error_upload_image">Error al subir la imagen</string>
-
+    <string name="error_account_exists">Ya existe una cuenta con este correo electrónico</string>
+    
     <!-- Éxito -->
     <string name="success_password_reset">Se ha enviado el enlace de recuperación</string>
     <string name="success_register">Cuenta creada exitosamente</string>
